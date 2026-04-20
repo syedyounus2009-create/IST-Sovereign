@@ -447,6 +447,10 @@ app.get('/api/admin/audit', requireAdmin, (req, res) => {
 // ═════════════════════════════════════════════════════════════════════════════
 const PORT = process.env.PORT || 3001;
 
+app.get("/", (req, res) => {
+  res.send("IST-Sovereign Backend Running");
+});
+
 app.listen(PORT, () => {
   console.log("\n====================================");
   console.log(`IST-Sovereign Backend running on PORT ${PORT}`);
@@ -457,6 +461,3 @@ app.listen(PORT, () => {
   console.log(`Database     : db.json\n`);
 });
 
-app.get("/", (req, res) => {
-  res.send("Server running");
-});
