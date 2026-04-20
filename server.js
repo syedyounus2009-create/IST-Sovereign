@@ -446,11 +446,13 @@ app.get('/api/admin/audit', requireAdmin, (req, res) => {
 // START
 // ═════════════════════════════════════════════════════════════════════════════
 const PORT = process.env.PORT || 3001;
+
 app.listen(PORT, () => {
-  console.log(`\n╔════════════════════════════════════════════╗`);
-  console.log(`║   IST-Sovereign Backend  —  PORT ${PORT}      ║`);
-  console.log(`╚════════════════════════════════════════════╝`);
-  console.log(`  Admin portal : http://localhost:${PORT}/admin.html`);
-  console.log(`  User site    : http://localhost:${PORT}/`);
-  console.log(`  Database     : ist_db.json\n`);
+  console.log("\n====================================");
+  console.log(`IST-Sovereign Backend running on PORT ${PORT}`);
+  console.log("====================================");
+
+  console.log(`Admin portal : http://localhost:${PORT}/admin`);
+  console.log(`User site    : http://localhost:${PORT}/`);
+  console.log(`Database     : db.json\n`);
 });
