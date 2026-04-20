@@ -1,0 +1,33 @@
+# IST-Sovereign .gitignore
+# Keeps secrets and generated files off GitHub
+
+# Secrets — NEVER upload
+.env
+.env.local
+.env.production
+
+# Database — auto-generated
+ist_db.json
+*.db
+*.sqlite
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Python build
+dist/
+build/
+*.spec
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
