@@ -456,3 +456,7 @@ app.listen(PORT, () => {
   console.log(`User site    : http://localhost:${PORT}/`);
   console.log(`Database     : db.json\n`);
 });
+
+app.get("/", (req, res) => {
+  res.send("Server running");
+});
