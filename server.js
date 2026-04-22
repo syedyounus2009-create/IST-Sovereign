@@ -28,37 +28,38 @@ app.get('/dashboard.html', (req, res) => {
 });
 
 // ── Database ──────────────────────────────────────────────────────────────────
-import pkg from 'pg';
-const { Pool } = pkg;
+const DB_FILE = path.join(__dirname, 'ist_db.json');
 
-// Connects to the Railway Postgres node using your secret URL
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
-});
-
-// Replaces the old file-based loadDB
-async function queryTabet(text, params) {
-  const start = Date.now();
-  const res = await pool.query(text, params);
-  return res;
+function loadDB() {
+  if (!fs.existsSync(DB_FILE)) {
+    fs.writeFileSync(DB_FILE,
+      JSON.stringify({ users: [], keys: [], audit: [] }, null, 2));
+  }
+  const data = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
+  if (!data.users)  data.users  = [];
+  if (!data.keys)   data.keys   = [];
+  if (!data.audit)  data.audit  = [];
+  return data;
 }
 
-// Updated Key Generation logic to save to Postgres
-app.post('/api/admin/generate-key', requireAdmin, async (req, res) => {
-  const { tier, note, count } = req.body;
-  const newKeys = [];
-  for(let i=0; i < (count||1); i++) {
-    const keyCode = 'IST-' + crypto.randomBytes(4).toString('hex').toUpperCase();
-    // Logic: Save directly to the permanent SQL table
-    await queryTabet(
-      'INSERT INTO keys (keyCode, tier, note, status) VALUES ($1, $2, $3, $4)',
-      [keyCode, tier, note, 'Active']
-    );
-    newKeys.push({ keyCode, tier });
-  }
-  res.json({ success: true, keys: newKeys });
-});
+function saveDB(data) {
+  fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2));
+}
+
+function logAudit(action, keyCode, detail, ip) {
+  try {
+    const db = loadDB();
+    db.audit.unshift({
+      id: Date.now(), action,
+      keyCode: keyCode || null,
+      detail: detail || null,
+      ip: ip || null,
+      timestamp: new Date().toISOString()
+    });
+    if (db.audit.length > 300) db.audit = db.audit.slice(0, 300);
+    saveDB(db);
+  } catch(e) {}
+}
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const JWT_SECRET     = process.env.JWT_SECRET     || 'ist-sovereign-2026';
