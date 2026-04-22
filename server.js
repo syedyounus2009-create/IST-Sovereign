@@ -392,3 +392,34 @@ initServices().then(() => {
   console.error('Startup error:', e.message);
   app.listen(PORT, '0.0.0.0', () => console.log(`Running PORT ${PORT}`));
 });
+
+import fs from 'fs';
+import path from 'path';
+
+// 1. Define the Sovereign Path
+const DB_FILE = '/data/ist_db.json';
+
+// 2. Optimized Load Logic to bypass "Permission Denied"
+function loadDB() {
+  try {
+    // Check if file exists, if not, create it with permissions
+    if (!fs.existsSync(DB_FILE)) {
+      const initialData = JSON.stringify({ users: [], keys: [], audit: [] }, null, 2);
+      fs.writeFileSync(DB_FILE, initialData, { mode: 0o666 }); // Sets read/write permissions
+      console.log("✓ Tabet Created in /data Volume");
+    }
+    
+    const raw = fs.readFileSync(DB_FILE, 'utf8');
+    const data = JSON.parse(raw);
+    
+    return {
+      users: data.users || [],
+      keys: data.keys || [],
+      audit: data.audit || []
+    };
+  } catch (err) {
+    // If the folder is missing, this is a Railway Mount error
+    console.error("❌ Tabet Critical Error:", err.message);
+    return { users: [], keys: [], audit: [] };
+  }
+}
