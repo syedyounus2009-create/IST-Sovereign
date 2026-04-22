@@ -392,19 +392,3 @@ initServices().then(() => {
   console.error('Startup error:', e.message);
   app.listen(PORT, '0.0.0.0', () => console.log(`Running PORT ${PORT}`));
 });
-
-// Wrap your email sending in a try/catch so it never crashes the main signal
-async function sendEmail(to, subject, text) {
-  try {
-    // Only attempt if credentials exist
-    if (!process.env.EMAIL_USER) {
-       console.log(`[Email skipped] ${to} - No Credentials`);
-       return;
-    }
-    await transporter.sendMail({ from: process.env.EMAIL_USER, to, subject, text });
-    console.log(`✓ Email sent to ${to}`);
-  } catch (err) {
-    console.log(`⚠ Email Background Failure: ${err.message}`);
-    // We do NOT throw the error here, so the API stays alive
-  }
-}
