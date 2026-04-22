@@ -28,38 +28,37 @@ app.get('/dashboard.html', (req, res) => {
 });
 
 // ── Database ──────────────────────────────────────────────────────────────────
-const DB_FILE = path.join(__dirname, 'ist_db.json');
+import pkg from 'pg';
+const { Pool } = pkg;
 
-function loadDB() {
-  if (!fs.existsSync(DB_FILE)) {
-    fs.writeFileSync(DB_FILE,
-      JSON.stringify({ users: [], keys: [], audit: [] }, null, 2));
+// Connects to the Railway Postgres node using your secret URL
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
+
+// Replaces the old file-based loadDB
+async function queryTabet(text, params) {
+  const start = Date.now();
+  const res = await pool.query(text, params);
+  return res;
+}
+
+// Updated Key Generation logic to save to Postgres
+app.post('/api/admin/generate-key', requireAdmin, async (req, res) => {
+  const { tier, note, count } = req.body;
+  const newKeys = [];
+  for(let i=0; i < (count||1); i++) {
+    const keyCode = 'IST-' + crypto.randomBytes(4).toString('hex').toUpperCase();
+    // Logic: Save directly to the permanent SQL table
+    await queryTabet(
+      'INSERT INTO keys (keyCode, tier, note, status) VALUES ($1, $2, $3, $4)',
+      [keyCode, tier, note, 'Active']
+    );
+    newKeys.push({ keyCode, tier });
   }
-  const data = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
-  if (!data.users)  data.users  = [];
-  if (!data.keys)   data.keys   = [];
-  if (!data.audit)  data.audit  = [];
-  return data;
-}
-
-function saveDB(data) {
-  fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2));
-}
-
-function logAudit(action, keyCode, detail, ip) {
-  try {
-    const db = loadDB();
-    db.audit.unshift({
-      id: Date.now(), action,
-      keyCode: keyCode || null,
-      detail: detail || null,
-      ip: ip || null,
-      timestamp: new Date().toISOString()
-    });
-    if (db.audit.length > 300) db.audit = db.audit.slice(0, 300);
-    saveDB(db);
-  } catch(e) {}
-}
+  res.json({ success: true, keys: newKeys });
+});
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const JWT_SECRET     = process.env.JWT_SECRET     || 'ist-sovereign-2026';
@@ -135,12 +134,13 @@ async function sendEmail(to, subject, html) {
 
 // ── Tiers ─────────────────────────────────────────────────────────────────────
 const TIERS = {
-  TRIAL:  { days: 7,   channels: 128,  label: 'Free Trial',   prefix: 'IST2' },
-  BRONZE: { days: 30,  channels: 256,  label: 'Bronze',       prefix: 'ISTB' },
-  SILVER: { days: 30,  channels: 512,  label: 'Silver',       prefix: 'ISTS' },
-  GOLD:   { days: 30,  channels: 1024, label: 'Gold',         prefix: 'ISTG' },
-  PRO:    { days: 365, channels: 1024, label: 'Professional', prefix: 'ISTP' },
+  TRIAL:        { days: 7,  channels: 1024, label: 'Free Trial',    prefix: 'ISTG', keys: 1 },
+  STARTER:      { days: 30, channels: 1024, label: 'Starter',       prefix: 'ISTG', keys: 1 },
+  PROFESSIONAL: { days: 30, channels: 1024, label: 'Professional',  prefix: 'ISTG', keys: 3 },
+  BUSINESS:     { days: 30, channels: 1024, label: 'Business',      prefix: 'ISTG', keys: 8 },
 };
+// NOTE: ALL plans use ISTG prefix (Gold) and 1024 channels
+// Difference is ONLY number of keys and duration
 
 function makeKey(tier = 'TRIAL', userId = null) {
   const t = TIERS[tier];
@@ -299,7 +299,7 @@ app.post('/api/user/trial', requireAuth, async (req, res) => {
         <div style="font-family:monospace;font-size:24px;letter-spacing:3px;
                     color:#1a73e8;font-weight:bold">${k.keyCode}</div>
         <div style="color:#5f6368;font-size:13px;margin-top:8px">
-          Valid for 7 days · 128-channel mode
+          Valid for 7 days · 1024-channel Gold · Full performance
         </div>
       </div>
       <p><strong>How to use:</strong></p>
@@ -316,7 +316,7 @@ app.post('/api/user/trial', requireAuth, async (req, res) => {
     </div>
   `);
 
-  res.json({ success: true, key: k });
+  res.json({ success: true, key: k, keys: generatedKeys, keyCount });
 });
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -325,7 +325,7 @@ app.post('/api/user/trial', requireAuth, async (req, res) => {
 
 app.post('/api/payment/create-order', requireAuth, async (req, res) => {
   const { tier } = req.body;
-  const amounts = { BRONZE: 19900, SILVER: 49900, GOLD: 99900 };
+  const amounts = { STARTER: 19900, PROFESSIONAL: 49900, BUSINESS: 99900 };
   if (!amounts[tier]) return res.status(400).json({ error: 'Invalid tier' });
 
   if (!razorpayInstance) {
@@ -362,24 +362,38 @@ app.post('/api/payment/verify', requireAuth, async (req, res) => {
   if (expected !== razorpay_signature)
     return res.status(400).json({ error: 'Invalid payment signature' });
 
-  const db = loadDB();
-  const k  = makeKey(tier, req.user.id);
-  k.customerEmail = req.user.email;
-  k.customerName  = req.user.name;
-  db.keys.unshift(k);
-  saveDB(db);
-  logAudit('PAYMENT_SUCCESS', k.keyCode, `${tier} ${req.user.email}`, req.ip);
+  const db       = loadDB();
+  const tierInfo = TIERS[tier];
+  const keyCount = tierInfo?.keys || 1;
+  const generatedKeys = [];
 
-  await sendEmail(req.user.email, `Your IST-Sovereign ${tier} Key`, `
+  for (let i = 0; i < keyCount; i++) {
+    const k = makeKey(tier, req.user.id);
+    k.customerEmail = req.user.email;
+    k.customerName  = req.user.name;
+    db.keys.unshift(k);
+    generatedKeys.push(k);
+  }
+  saveDB(db);
+  logAudit('PAYMENT_SUCCESS', generatedKeys[0].keyCode,
+    `${tier} x${keyCount} ${req.user.email}`, req.ip);
+
+  const keyListHtml = generatedKeys.map((k, i) =>
+    `<div style="font-family:monospace;font-size:18px;letter-spacing:2px;
+     color:#1a73e8;font-weight:bold;margin:8px 0">Key ${i+1}: ${k.keyCode}</div>`
+  ).join('');
+
+  const k = generatedKeys[0]; // for response
+
+  await sendEmail(req.user.email, `Your IST-Sovereign ${tierInfo?.label || tier} Keys`, `
     <div style="font-family:Arial,sans-serif;max-width:500px;margin:0 auto">
       <h2 style="color:#1a73e8">Payment Successful — ${tier} Plan</h2>
       <p>Thank you for your purchase!</p>
       <div style="background:#f8f9fa;border:2px solid #1a73e8;padding:20px;
-                  text-align:center;margin:20px 0;border-radius:8px">
-        <div style="font-family:monospace;font-size:24px;letter-spacing:3px;
-                    color:#1a73e8;font-weight:bold">${k.keyCode}</div>
-        <div style="color:#5f6368;font-size:13px;margin-top:8px">
-          ${TIERS[tier].label} · ${TIERS[tier].channels} channels · 30 days
+                  margin:20px 0;border-radius:8px">
+        \${keyListHtml}
+        <div style="color:#5f6368;font-size:13px;margin-top:8px;text-align:center">
+          \${tierInfo?.label || tier} · 1024-channel Gold · 30 days · \${keyCount} device\${keyCount>1?'s':''}
         </div>
       </div>
       <p style="color:#5f6368;font-size:12px">IST-Sovereign | ist.sovereign.support@gmail.com</p>
