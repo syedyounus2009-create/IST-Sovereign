@@ -126,17 +126,31 @@ nav{background:var(--white);border-bottom:1px solid var(--border);
       <!-- UPGRADE -->
       <div class="card">
         <div class="card-title">Upgrade Plan</div>
-        <div class="pkg-row">
-          <div><div class="pkg-name">Bronze</div><div class="pkg-desc">1 device · 256-channel · ₹199/month</div></div>
-          <button class="btn btn-outline" onclick="buyPlan('BRONZE',199)">Buy ₹199</button>
+        <div style="font-size:12px;color:var(--primary);background:#e8f0fe;
+          padding:8px 12px;border-radius:6px;margin-bottom:14px">
+          ★ All plans — 1024-channel Gold performance on every device
         </div>
         <div class="pkg-row">
-          <div><div class="pkg-name">Silver ⭐</div><div class="pkg-desc">3 devices · 512-channel · ₹499/month</div></div>
-          <button class="btn btn-primary" onclick="buyPlan('SILVER',499)">Buy ₹499</button>
+          <div>
+            <div class="pkg-name">Starter</div>
+            <div class="pkg-desc">1 device · 1 key · 1024-ch Gold · ₹199/month</div>
+          </div>
+          <button class="btn btn-outline" onclick="buyPlan('STARTER',199)">Buy ₹199</button>
         </div>
         <div class="pkg-row">
-          <div><div class="pkg-name">Gold</div><div class="pkg-desc">10 devices · 1024-channel · ₹999/month</div></div>
-          <button class="btn btn-outline" style="color:var(--gold);border-color:var(--gold)" onclick="buyPlan('GOLD',999)">Buy ₹999</button>
+          <div>
+            <div class="pkg-name">Professional ⭐</div>
+            <div class="pkg-desc">3 devices · 3 keys · 1024-ch Gold · ₹499/month</div>
+          </div>
+          <button class="btn btn-primary" onclick="buyPlan('PROFESSIONAL',499)">Buy ₹499</button>
+        </div>
+        <div class="pkg-row">
+          <div>
+            <div class="pkg-name">Business</div>
+            <div class="pkg-desc">8 devices · 8 keys · 1024-ch Gold · ₹999/month</div>
+          </div>
+          <button class="btn btn-outline" style="color:var(--gold);border-color:var(--gold)"
+            onclick="buyPlan('BUSINESS',999)">Buy ₹999</button>
         </div>
         <div style="margin-top:12px;font-size:12px;color:var(--text2)">
           Pay via UPI · Google Pay · PhonePe · Paytm · PayPal
@@ -156,7 +170,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);
           v2.1.0 · Windows 10/11 · 64-bit<br/>
           Run as Administrator for best results
         </div>
-        <a href="https://raw.githubusercontent.com/syedyounus2009-create/IST-Sovereign/main/IST-Sovereign.exe"
+        <a href="https://ist-sovereign-production.up.railway.app/IST-Sovereign.exe"
            class="btn-download" download="IST-Sovereign.exe">
           ⬇ Download .exe
         </a>
@@ -183,7 +197,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);
         <div style="font-size:13px;color:var(--text2);line-height:2">
           <div>📧 ist.sovereign.support@gmail.com</div>
           <div>💬 <a href="https://wa.me/917702249018" target="_blank">WhatsApp Business</a></div>
-          <div>🌐 <a href="/" onclick="goHome()">ist-sovereign.vercel.app</a></div>
+          <div>🌐 <a href="/" onclick="goHome()">ist-sovereign-production.up.railway.app</a></div>
         </div>
       </div>
 
@@ -300,7 +314,7 @@ async function buyPlan(tier, amount) {
       return;
     }
     new Razorpay({
-      key: 'rzp_test_Se9gXNic02I9UW',
+      key: window.RAZORPAY_KEY || 'rzp_test_Se9gXNic02I9UW',
       amount: d.amount, currency: 'INR',
       name: 'IST-Sovereign',
       description: tier + ' Plan',
