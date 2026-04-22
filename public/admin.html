@@ -455,23 +455,39 @@ async function loadStats() {
 }
 
 // ── Generate Key ──────────────────────────────────────────────────────────────
-app.post('/api/admin/generate-key', requireAdmin, async (req, res) => {
-  const { tier = 'TRIAL', customerName, customerEmail, notes } = req.body;
-  try {
-    const k = makeKey(tier); // Uses your existing logic for prefix/expiry
-    
-    const sql = `
-      INSERT INTO keys (keyCode, tier, label, channels, createdAt, expiresAt, status, customerName, customerEmail, notes)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-    `;
-    const values = [k.keyCode, k.tier, k.label, k.channels, k.createdAt, k.expiresAt, 'PENDING', customerName, customerEmail, notes];
+async function generateKey() {
+  const tier  = document.getElementById('gen-tier').value;
+  const name  = document.getElementById('gen-name').value;
+  const email = document.getElementById('gen-email').value;
+  const notes = document.getElementById('gen-notes').value;
+  const d = await api('/api/admin/generate-key', 'POST',
+    { tier, customerName: name, customerEmail: email, notes });
+  if (!d || !d.success) { showToast('Generation failed', 'error'); return; }
+  document.getElementById('key-display').textContent = d.key.keyCode;
+  document.getElementById('key-meta').textContent =
+    `${d.key.label}  ·  ${d.key.channels} channels  ·  Expires: ${fmtDate(d.key.expiresAt)}`;
+  document.getElementById('key-result').style.display = 'block';
+  showToast('Key generated' + (email ? ' — email sent' : ''), 'success');
+  loadStats();
+}
 
-    await saveToTabet(sql, values);
-    res.json({ success: true, key: k });
-  } catch(e) {
-    res.status(500).json({ error: 'Database Glitch: Key not saved' });
+function copyKey() {
+  navigator.clipboard.writeText(document.getElementById('key-display').textContent);
+  showToast('Key copied!', 'success');
+}
+
+async function generateBulk() {
+  const count = parseInt(document.getElementById('bulk-count').value) || 5;
+  const keys  = [];
+  for (let i = 0; i < count; i++) {
+    const d = await api('/api/admin/generate-key', 'POST', { tier: 'TRIAL' });
+    if (d && d.success) keys.push(d.key.keyCode);
   }
-});
+  document.getElementById('bulk-result').innerHTML =
+    keys.map(k => `<div>${k}</div>`).join('');
+  showToast(`${keys.length} trial keys generated`, 'success');
+  loadStats();
+}
 
 // ── Keys Table ────────────────────────────────────────────────────────────────
 async function loadKeys() {
