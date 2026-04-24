@@ -3,150 +3,101 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>IST-Sovereign — Admin Portal</title>
+<title>IST-Sovereign Admin Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
 <style>
+/* IST-SOVEREIGN ADMIN PORTAL v5.0
+   SECTIONS: A-Styles B-Login C-App D-Tabs E-Modal F-JavaScript */
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --primary:#1a73e8;--primary-hover:#174ea6;
+  --primary:#1a73e8;--primary-h:#174ea6;
   --text:#202124;--text2:#5f6368;
-  --bg:#ffffff;--bg-alt:#f8f9fa;--bg-alt2:#e8f0fe;
-  --border:#dadce0;--radius:8px;--radius-sm:4px;
+  --bg:#f8f9fa;--white:#fff;--border:#dadce0;
   --green:#137333;--green-bg:#e6f4ea;
   --red:#c5221f;--red-bg:#fce8e6;
   --gold:#b06000;--gold-bg:#fef7e0;
   --violet:#6200ea;--violet-bg:#f3e8fd;
+  --r:8px;
 }
-body{font-family:'Roboto',sans-serif;background:var(--bg-alt);color:var(--text);-webkit-font-smoothing:antialiased}
-a{color:var(--primary);text-decoration:none}
-
-/* ── LOGIN ── */
+body{font-family:'Roboto',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
 #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh}
-.login-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);
-  padding:48px 40px;width:360px;text-align:center;
-  box-shadow:0 1px 3px rgba(0,0,0,0.08)}
-.login-logo{font-size:20px;font-weight:500;color:var(--text);margin-bottom:8px}
+.login-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:48px 40px;width:360px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.login-logo{font-size:20px;font-weight:500;color:var(--text);margin-bottom:6px}
+.login-logo span{color:var(--primary)}
 .login-sub{font-size:13px;color:var(--text2);margin-bottom:28px}
-.form-input{width:100%;padding:11px 14px;border:1px solid var(--border);
-  border-radius:var(--radius-sm);font-size:14px;font-family:inherit;
-  outline:none;transition:border-color 0.2s;margin-bottom:12px}
-.form-input:focus{border-color:var(--primary);box-shadow:0 0 0 2px rgba(26,115,232,0.2)}
-.btn{display:inline-flex;align-items:center;justify-content:center;
-  padding:9px 18px;font-size:14px;font-weight:500;border-radius:var(--radius-sm);
-  cursor:pointer;border:1px solid transparent;transition:all 0.2s;font-family:inherit}
-.btn-primary{background:var(--primary);color:white;width:100%;padding:11px}
-.btn-primary:hover{background:var(--primary-hover)}
+.form-input{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:6px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;margin-bottom:12px;background:var(--white);color:var(--text)}
+.form-input:focus{border-color:var(--primary)}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:9px 18px;font-size:14px;font-weight:500;border-radius:6px;cursor:pointer;border:1px solid transparent;transition:all .2s;font-family:inherit}
+.btn-primary{background:var(--primary);color:#fff;width:100%;padding:11px}
+.btn-primary:hover{background:var(--primary-h)}
 .btn-sm{padding:5px 12px;font-size:13px}
 .btn-outline{background:transparent;color:var(--primary);border-color:var(--border)}
-.btn-outline:hover{background:var(--bg-alt)}
+.btn-outline:hover{background:var(--bg)}
 .btn-danger{background:var(--red-bg);color:var(--red);border-color:transparent}
 .btn-danger:hover{background:#f5c6c5}
 .btn-success{background:var(--green-bg);color:var(--green);border-color:transparent}
 .btn-success:hover{background:#c8e6c9}
 .btn-gold{background:var(--gold-bg);color:var(--gold);border-color:transparent}
 .btn-gold:hover{background:#fde8a0}
+.btn-dl{background:#0d47a1;color:#fff;border-color:transparent}
+.btn-dl:hover{background:#1565c0}
 .err-msg{font-size:13px;color:var(--red);margin-top:8px;display:none}
-
-/* ── APP ── */
 #app{display:none}
-header{background:var(--bg);border-bottom:1px solid var(--border);
-  padding:0 32px;height:56px;display:flex;align-items:center;
-  justify-content:space-between;position:sticky;top:0;z-index:100}
-.header-logo{font-size:17px;font-weight:500;color:var(--text)}
-.header-logo span{color:var(--primary)}
-.header-right{display:flex;align-items:center;gap:16px}
-.admin-badge{font-size:11px;background:var(--bg-alt2);color:var(--primary);
-  padding:3px 10px;border-radius:12px;font-weight:500}
-
-/* ── LAYOUT ── */
+header{background:var(--white);border-bottom:1px solid var(--border);padding:0 28px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.hl{font-size:17px;font-weight:500;color:var(--text)}
+.hl span{color:var(--primary)}
+.hr{display:flex;align-items:center;gap:10px}
+.ab{font-size:11px;background:#e8f0fe;color:var(--primary);padding:3px 10px;border-radius:12px;font-weight:500}
 .layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 56px)}
-.sidebar{background:var(--bg);border-right:1px solid var(--border);padding:16px 0}
-.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;
-  font-size:14px;color:var(--text2);cursor:pointer;transition:all 0.15s;
-  border-left:3px solid transparent}
-.nav-item:hover{background:var(--bg-alt);color:var(--text)}
-.nav-item.active{background:var(--bg-alt2);color:var(--primary);
-  border-left-color:var(--primary);font-weight:500}
-.nav-icon{font-size:16px;width:20px;text-align:center}
+.sidebar{background:var(--white);border-right:1px solid var(--border);padding:16px 0}
+.ni{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:14px;color:var(--text2);cursor:pointer;transition:all .15s;border-left:3px solid transparent}
+.ni:hover{background:var(--bg);color:var(--text)}
+.ni.active{background:#e8f0fe;color:var(--primary);border-left-color:var(--primary);font-weight:500}
 .content{padding:28px 32px;overflow-y:auto}
-
-/* ── TABS ── */
-.tab{display:none}
-.tab.active{display:block}
-
-/* ── STAT CARDS ── */
+.tab{display:none}.tab.active{display:block}
 .stats-row{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:24px}
-.stat-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);
-  padding:16px;text-align:center}
-.stat-num{font-size:28px;font-weight:500;line-height:1}
-.stat-label{font-size:11px;color:var(--text2);margin-top:4px;font-weight:500;letter-spacing:0.3px}
-
-/* ── CARDS ── */
-.card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);
-  padding:20px;margin-bottom:20px}
-.card-title{font-size:16px;font-weight:500;margin-bottom:16px;
-  display:flex;align-items:center;justify-content:space-between}
-
-/* ── GENERATE FORM ── */
-.gen-form{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
-.gen-form .form-group{display:flex;flex-direction:column;gap:4px}
-.gen-form label{font-size:12px;color:var(--text2);font-weight:500}
-.gen-form select,.gen-form input{padding:8px 12px;border:1px solid var(--border);
-  border-radius:var(--radius-sm);font-size:13px;font-family:inherit;
-  outline:none;transition:border-color 0.2s;background:var(--bg)}
-.gen-form select:focus,.gen-form input:focus{border-color:var(--primary)}
-.key-result{background:var(--bg-alt2);border:2px dashed var(--primary);
-  border-radius:var(--radius);padding:16px;margin-top:16px;
-  text-align:center;display:none}
-.key-code-display{font-family:monospace;font-size:22px;letter-spacing:3px;
-  color:var(--primary);font-weight:700;margin-bottom:6px}
-.key-meta{font-size:12px;color:var(--text2)}
-.copy-btn{margin-top:10px;padding:6px 16px;font-size:12px;
-  background:var(--primary);color:white;border:none;border-radius:var(--radius-sm);
-  cursor:pointer;font-family:inherit}
-
-/* ── TABLE ── */
-.table-wrap{overflow-x:auto}
-.search-bar{padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);
-  font-size:13px;width:260px;outline:none;font-family:inherit;margin-bottom:14px}
-.search-bar:focus{border-color:var(--primary)}
+.sc{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center}
+.sn{font-size:28px;font-weight:500;line-height:1}
+.sl{font-size:11px;color:var(--text2);margin-top:4px;font-weight:500}
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:20px}
+.ct{font-size:16px;font-weight:500;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.gf{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg label{font-size:12px;color:var(--text2);font-weight:500}
+.gf select,.gf input{padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;outline:none;background:var(--white)}
+.gf select:focus,.gf input:focus{border-color:var(--primary)}
+.kr{background:#e8f0fe;border:2px dashed var(--primary);border-radius:var(--r);padding:16px;margin-top:16px;text-align:center;display:none}
+.kcd{font-family:monospace;font-size:20px;letter-spacing:3px;color:var(--primary);font-weight:700;margin-bottom:4px;word-break:break-all}
+.km{font-size:12px;color:var(--text2)}
+.cb{margin-top:10px;padding:6px 16px;font-size:12px;background:var(--primary);color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:inherit}
+.cb:hover{background:var(--primary-h)}
+.tw{overflow-x:auto}
+.sb{padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;width:280px;outline:none;font-family:inherit;margin-bottom:14px}
+.sb:focus{border-color:var(--primary)}
 table{width:100%;border-collapse:collapse;font-size:13px}
 thead tr{border-bottom:2px solid var(--border)}
 th{text-align:left;padding:9px 10px;color:var(--text2);font-weight:500;font-size:12px;white-space:nowrap}
 td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
-tr:hover td{background:var(--bg-alt)}
+tr:hover td{background:var(--bg)}
 .mono{font-family:monospace;font-size:12px;color:var(--primary)}
 .badge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:500}
-.badge-active{background:var(--green-bg);color:var(--green)}
-.badge-pending{background:var(--gold-bg);color:var(--gold)}
-.badge-killed{background:var(--red-bg);color:var(--red)}
-.badge-expired{background:var(--bg-alt);color:var(--text2)}
-.badge-trial{background:var(--violet-bg);color:var(--violet)}
-.badge-bronze{background:#fef3e2;color:#b06000}
-.badge-silver{background:#f1f3f4;color:#5f6368}
-.badge-gold{background:var(--gold-bg);color:var(--gold)}
-.badge-pro{background:var(--bg-alt2);color:var(--primary)}
-.action-row{display:flex;gap:5px}
-
-/* ── LOG ── */
-.log-row{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);
-  font-size:12px;align-items:baseline}
-.log-time{color:var(--text2);white-space:nowrap;min-width:130px}
-.log-action{color:var(--primary);font-weight:500;min-width:140px}
-.log-detail{color:var(--text2)}
-
-/* ── EXTEND MODAL ── */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(32,33,36,0.5);
-  z-index:999;align-items:center;justify-content:center}
-.modal-bg.open{display:flex}
-.modal-box{background:var(--bg);border-radius:var(--radius);padding:28px;
-  width:320px;box-shadow:0 8px 24px rgba(0,0,0,0.12)}
-.modal-title{font-size:16px;font-weight:500;margin-bottom:16px}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:20px;right:20px;background:var(--text);color:white;
-  padding:10px 18px;border-radius:var(--radius-sm);font-size:13px;
-  z-index:9999;opacity:0;transform:translateY(10px);transition:all 0.3s;pointer-events:none}
+.badge-active      {background:var(--green-bg);color:var(--green)}
+.badge-pending     {background:var(--gold-bg);color:var(--gold)}
+.badge-killed      {background:var(--red-bg);color:var(--red)}
+.badge-expired     {background:var(--bg);color:var(--text2);border:1px solid var(--border)}
+.badge-trial       {background:var(--violet-bg);color:var(--violet)}
+.badge-starter     {background:#e3f2fd;color:#0d47a1}
+.badge-professional{background:#e8f0fe;color:var(--primary)}
+.badge-business    {background:var(--gold-bg);color:var(--gold)}
+.ar{display:flex;gap:5px}
+.lr{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;align-items:baseline;flex-wrap:wrap}
+.lt{color:var(--text2);white-space:nowrap;min-width:130px}
+.la{color:var(--primary);font-weight:500;min-width:160px}
+.ld{color:var(--text2)}
+.mbg{display:none;position:fixed;inset:0;background:rgba(32,33,36,.5);z-index:999;align-items:center;justify-content:center}
+.mbg.open{display:flex}
+.mb{background:var(--white);border-radius:var(--r);padding:28px;width:320px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--text);color:#fff;padding:10px 18px;border-radius:6px;font-size:13px;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
 .toast.show{opacity:1;transform:translateY(0)}
 .toast.success{background:var(--green)}
 .toast.error{background:var(--red)}
@@ -154,192 +105,128 @@ tr:hover td{background:var(--bg-alt)}
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
-    <div class="login-logo">IST-<span style="color:var(--primary)">Sovereign</span></div>
+    <div class="login-logo">IST-<span>Sovereign</span></div>
     <div class="login-sub">Admin Portal — Authorised Access Only</div>
-    <input type="password" id="login-pass" class="form-input" placeholder="Admin password"
-      onkeydown="if(event.key==='Enter')doLogin()"/>
+    <input type="password" id="lp" class="form-input" placeholder="Admin password" onkeydown="if(event.key==='Enter')doLogin()"/>
     <button class="btn btn-primary" onclick="doLogin()">Sign in to Admin</button>
-    <div class="err-msg" id="login-err">Incorrect password. Access denied.</div>
+    <div class="err-msg" id="le"></div>
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
   <header>
-    <div class="header-logo">IST-<span>Sovereign</span> Admin</div>
-    <div class="header-right">
-      <span class="admin-badge">ADMIN</span>
+    <div class="hl">IST-<span>Sovereign</span> Admin</div>
+    <div class="hr">
+      <span class="ab">ADMIN</span>
+      <button class="btn btn-dl btn-sm" onclick="downloadDB()">⬇ DB Backup</button>
       <button class="btn btn-outline btn-sm" onclick="doLogout()">Sign out</button>
     </div>
   </header>
-
   <div class="layout">
-    <!-- Sidebar -->
     <div class="sidebar">
-      <div class="nav-item active" onclick="switchTab('dashboard')">
-        <span class="nav-icon">📊</span> Dashboard
-      </div>
-      <div class="nav-item" onclick="switchTab('generate')">
-        <span class="nav-icon">🔑</span> Generate Key
-      </div>
-      <div class="nav-item" onclick="switchTab('keys')">
-        <span class="nav-icon">🗝️</span> All Keys
-      </div>
-      <div class="nav-item" onclick="switchTab('users')">
-        <span class="nav-icon">👥</span> Users
-      </div>
-      <div class="nav-item" onclick="switchTab('audit')">
-        <span class="nav-icon">📋</span> Audit Log
-      </div>
+      <div class="ni active" onclick="switchTab('dashboard',this)">📊 Dashboard</div>
+      <div class="ni" onclick="switchTab('generate',this)">🔑 Generate Key</div>
+      <div class="ni" onclick="switchTab('keys',this)">🗝️ All Keys</div>
+      <div class="ni" onclick="switchTab('users',this)">👥 Users</div>
+      <div class="ni" onclick="switchTab('audit',this)">📋 Audit Log</div>
     </div>
-
-    <!-- Content -->
     <div class="content">
 
-      <!-- DASHBOARD TAB -->
+      <!-- DASHBOARD -->
       <div class="tab active" id="tab-dashboard">
         <div class="stats-row">
-          <div class="stat-card">
-            <div class="stat-num" id="s-total" style="color:var(--primary)">—</div>
-            <div class="stat-label">Total Keys</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num" id="s-active" style="color:var(--green)">—</div>
-            <div class="stat-label">Active</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num" id="s-trial" style="color:var(--violet)">—</div>
-            <div class="stat-label">Trial</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num" id="s-killed" style="color:var(--red)">—</div>
-            <div class="stat-label">Killed</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num" id="s-expired" style="color:var(--gold)">—</div>
-            <div class="stat-label">Expired</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num" id="s-users" style="color:var(--primary)">—</div>
-            <div class="stat-label">Users</div>
-          </div>
+          <div class="sc"><div class="sn" id="s0" style="color:var(--primary)">—</div><div class="sl">Total Keys</div></div>
+          <div class="sc"><div class="sn" id="s1" style="color:var(--green)">—</div><div class="sl">Active</div></div>
+          <div class="sc"><div class="sn" id="s2" style="color:var(--violet)">—</div><div class="sl">Trial</div></div>
+          <div class="sc"><div class="sn" id="s3" style="color:var(--red)">—</div><div class="sl">Killed</div></div>
+          <div class="sc"><div class="sn" id="s4" style="color:var(--gold)">—</div><div class="sl">Expired</div></div>
+          <div class="sc"><div class="sn" id="s5" style="color:var(--primary)">—</div><div class="sl">Users</div></div>
         </div>
         <div class="card">
-          <div class="card-title">
-            Recent Activity
-            <button class="btn btn-outline btn-sm" onclick="loadStats()">Refresh</button>
-          </div>
+          <div class="ct">Recent Activity <button class="btn btn-outline btn-sm" onclick="loadStats()">Refresh</button></div>
           <div id="recent-log"></div>
         </div>
       </div>
 
-      <!-- GENERATE TAB -->
+      <!-- GENERATE KEY -->
       <div class="tab" id="tab-generate">
         <div class="card">
-          <div class="card-title">Generate New IST-SIM Key</div>
-          <div class="gen-form">
-            <div class="form-group">
-              <label>Tier</label>
-              <select id="gen-tier">
-                <option value="TRIAL">Trial — 7 days free</option>
-                <option value="BRONZE">Bronze — Rs.199/month</option>
-                <option value="SILVER">Silver — Rs.499/month</option>
-                <option value="GOLD">Gold — Rs.999/month</option>
-                <option value="PRO">Pro — Rs.9999/year</option>
+          <div class="ct">Generate New IST-SIM Key</div>
+          <div class="gf">
+            <div class="fg">
+              <label>Plan</label>
+              <select id="gen-plan">
+                <option value="TRIAL">Free Trial — 1 key · 7 days · Gold</option>
+                <option value="STARTER">Starter — 1 key · 30 days · Rs.199</option>
+                <option value="PROFESSIONAL">Professional — 3 keys · 30 days · Rs.499</option>
+                <option value="BUSINESS">Business — 8 keys · 30 days · Rs.999</option>
               </select>
             </div>
-            <div class="form-group">
-              <label>Customer Name</label>
-              <input type="text" id="gen-name" placeholder="Full name" style="width:180px"/>
-            </div>
-            <div class="form-group">
-              <label>Customer Email</label>
-              <input type="email" id="gen-email" placeholder="customer@email.com" style="width:210px"/>
-            </div>
-            <div class="form-group">
-              <label>Notes (optional)</label>
-              <input type="text" id="gen-notes" placeholder="Notes" style="width:160px"/>
-            </div>
-            <div class="form-group" style="justify-content:flex-end">
-              <button class="btn btn-primary" onclick="generateKey()" style="height:36px">Generate Key</button>
+            <div class="fg"><label>Customer Name</label><input type="text" id="gen-name" placeholder="Full name" style="width:160px"/></div>
+            <div class="fg"><label>Customer Email</label><input type="email" id="gen-email" placeholder="customer@email.com" style="width:200px"/></div>
+            <div class="fg"><label>Notes</label><input type="text" id="gen-notes" placeholder="Optional" style="width:130px"/></div>
+            <div class="fg" style="justify-content:flex-end">
+              <button class="btn btn-primary" onclick="generateKey()" style="height:36px">Generate Key(s)</button>
             </div>
           </div>
-          <div class="key-result" id="key-result">
-            <div class="key-code-display" id="key-display"></div>
-            <div class="key-meta" id="key-meta"></div>
-            <button class="copy-btn" onclick="copyKey()">Copy Key</button>
+          <div class="kr" id="key-result">
+            <div id="key-display-area"></div>
+            <div class="km" id="key-meta"></div>
+            <button class="cb" onclick="copyAllKeys()">Copy All Keys</button>
           </div>
         </div>
-
         <div class="card">
-          <div class="card-title">Bulk Trial Keys</div>
+          <div class="ct">Bulk Trial Keys</div>
           <div style="display:flex;gap:10px;align-items:center">
-            <div class="form-group">
+            <div class="fg">
               <label style="font-size:12px;color:var(--text2);font-weight:500">Count</label>
-              <input type="number" id="bulk-count" value="5" min="1" max="50"
-                style="width:80px;padding:8px 12px;border:1px solid var(--border);
-                border-radius:var(--radius-sm);font-size:13px"/>
+              <input type="number" id="bulk-count" value="5" min="1" max="50" style="width:80px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px"/>
             </div>
-            <button class="btn btn-outline" onclick="generateBulk()" style="margin-top:18px">
-              Generate Bulk Trials
-            </button>
+            <button class="btn btn-outline" onclick="generateBulk()" style="margin-top:16px">Generate Bulk Trials</button>
           </div>
-          <div id="bulk-result" style="margin-top:14px;font-family:monospace;font-size:13px;
-            color:var(--primary);line-height:2.2"></div>
+          <div id="bulk-result" style="margin-top:14px;font-family:monospace;font-size:13px;color:var(--primary);line-height:2.2"></div>
         </div>
       </div>
 
-      <!-- KEYS TAB -->
+      <!-- ALL KEYS -->
       <div class="tab" id="tab-keys">
         <div class="card">
-          <div class="card-title">
+          <div class="ct">
             All Keys
-            <button class="btn btn-outline btn-sm" onclick="loadKeys()">Refresh</button>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-dl btn-sm" onclick="downloadDB()">⬇ DB Backup</button>
+              <button class="btn btn-outline btn-sm" onclick="loadKeys()">Refresh</button>
+            </div>
           </div>
-          <input type="text" id="key-search" class="search-bar"
-            placeholder="Search by key, email, name..."
-            oninput="filterKeys()"/>
-          <div class="table-wrap">
+          <input type="text" id="key-search" class="sb" placeholder="Search by key, email, name, plan..." oninput="filterKeys()"/>
+          <div class="tw">
             <table>
-              <thead><tr>
-                <th>Key</th><th>Tier</th><th>Status</th>
-                <th>Customer</th><th>Hardware Locked</th>
-                <th>Expires</th><th>Last Seen</th><th>Actions</th>
-              </tr></thead>
-              <tbody id="keys-body"></tbody>
+              <thead><tr><th>Key Code</th><th>Plan</th><th>Status</th><th>Customer</th><th>Hardware</th><th>Expires</th><th>Last Seen</th><th>Actions</th></tr></thead>
+              <tbody id="keys-body"><tr><td colspan="8" style="text-align:center;color:var(--text2);padding:20px">Loading...</td></tr></tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- USERS TAB -->
+      <!-- USERS -->
       <div class="tab" id="tab-users">
         <div class="card">
-          <div class="card-title">
-            Registered Users
-            <button class="btn btn-outline btn-sm" onclick="loadUsers()">Refresh</button>
-          </div>
-          <div class="table-wrap">
+          <div class="ct">Registered Users <button class="btn btn-outline btn-sm" onclick="loadUsers()">Refresh</button></div>
+          <div class="tw">
             <table>
-              <thead><tr>
-                <th>Name</th><th>Email</th><th>Registered</th>
-              </tr></thead>
+              <thead><tr><th>Name</th><th>Email</th><th>Registered</th></tr></thead>
               <tbody id="users-body"></tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- AUDIT TAB -->
+      <!-- AUDIT LOG -->
       <div class="tab" id="tab-audit">
         <div class="card">
-          <div class="card-title">
-            Audit Log — Last 100 Events
-            <button class="btn btn-outline btn-sm" onclick="loadAudit()">Refresh</button>
-          </div>
+          <div class="ct">Audit Log — Last 100 Events <button class="btn btn-outline btn-sm" onclick="loadAudit()">Refresh</button></div>
           <div id="audit-container"></div>
         </div>
       </div>
@@ -349,17 +236,13 @@ tr:hover td{background:var(--bg-alt)}
 </div>
 
 <!-- EXTEND MODAL -->
-<div class="modal-bg" id="extend-modal">
-  <div class="modal-box">
-    <div class="modal-title">Extend Key Expiry</div>
+<div class="mbg" id="extend-modal">
+  <div class="mb">
+    <div style="font-size:16px;font-weight:500;margin-bottom:16px">Extend Key Expiry</div>
     <input type="hidden" id="extend-key-code"/>
-    <div class="form-group" style="margin-bottom:16px">
-      <label style="font-size:12px;color:var(--text2);font-weight:500;display:block;margin-bottom:4px">
-        Days to add
-      </label>
-      <input type="number" id="extend-days" value="30" min="1" max="365"
-        style="padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);
-        font-size:14px;width:100px"/>
+    <div class="fg" style="margin-bottom:16px">
+      <label style="font-size:12px;color:var(--text2);font-weight:500;display:block;margin-bottom:4px">Days to add</label>
+      <input type="number" id="extend-days" value="30" min="1" max="365" style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:14px;width:100px"/>
     </div>
     <div style="display:flex;gap:10px">
       <button class="btn btn-primary btn-sm" onclick="doExtend()">Extend</button>
@@ -371,13 +254,24 @@ tr:hover td{background:var(--bg-alt)}
 <div class="toast" id="toast"></div>
 
 <script>
-const API = '';
-let TOKEN = localStorage.getItem('ist_admin_token') || '';
-let allKeys = [], allUsers = [];
+// RAILWAY URL — change if your Railway URL changes
+const RAILWAY = 'https://ist-sovereign-production.up.railway.app';
+const API = window.location.hostname === 'localhost' ? '' : RAILWAY;
 
-// ── Auth ──────────────────────────────────────────────────────────────────────
+let TOKEN = localStorage.getItem('ist_admin_token') || '';
+let allKeys = [];
+
+if (TOKEN) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  loadStats(); loadKeys(); loadUsers();
+}
+
+// AUTH
 async function doLogin() {
-  const pass = document.getElementById('login-pass').value;
+  const pass = document.getElementById('lp').value;
+  const err  = document.getElementById('le');
+  err.style.display = 'none';
   try {
     const r = await fetch(`${API}/api/admin/login`, {
       method:'POST', headers:{'Content-Type':'application/json'},
@@ -391,11 +285,12 @@ async function doLogin() {
       document.getElementById('app').style.display = 'block';
       loadStats(); loadKeys(); loadUsers();
     } else {
-      document.getElementById('login-err').style.display = 'block';
+      err.textContent = d.error || 'Wrong password';
+      err.style.display = 'block';
     }
-  } catch {
-    document.getElementById('login-err').textContent = 'Cannot reach server. Is it running?';
-    document.getElementById('login-err').style.display = 'block';
+  } catch(e) {
+    err.textContent = 'Cannot reach server — check Railway is running';
+    err.style.display = 'block';
   }
 }
 
@@ -404,198 +299,197 @@ function doLogout() {
   location.reload();
 }
 
-if (TOKEN) {
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  loadStats(); loadKeys(); loadUsers();
-}
-
-// ── API helper ────────────────────────────────────────────────────────────────
+// API HELPER
 async function api(path, method='GET', body=null) {
-  const opts = {
-    method,
-    headers: { 'Content-Type':'application/json', 'x-admin-token': TOKEN }
-  };
+  const opts = { method, headers: {'Content-Type':'application/json','x-admin-token':TOKEN} };
   if (body) opts.body = JSON.stringify(body);
   const r = await fetch(API + path, opts);
   if (r.status === 401) { doLogout(); return null; }
   return r.json();
 }
 
-// ── Tab switching ─────────────────────────────────────────────────────────────
-function switchTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  event.currentTarget.classList.add('active');
-  if (name === 'keys')   loadKeys();
-  if (name === 'users')  loadUsers();
-  if (name === 'audit')  loadAudit();
-  if (name === 'dashboard') loadStats();
+// TAB SWITCHING
+function switchTab(name, el) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if (el) el.classList.add('active');
+  if (name==='keys')      loadKeys();
+  if (name==='users')     loadUsers();
+  if (name==='audit')     loadAudit();
+  if (name==='dashboard') loadStats();
 }
 
-// ── Dashboard ─────────────────────────────────────────────────────────────────
+// DB DOWNLOAD — saves ist_db.json to your laptop
+async function downloadDB() {
+  try {
+    const r = await fetch(`${API}/api/admin/download-db`, { headers:{'x-admin-token':TOKEN} });
+    if (!r.ok) { showToast('Download failed','error'); return; }
+    const blob = await r.blob();
+    const url  = URL.createObjectURL(blob);
+    const date = new Date().toISOString().slice(0,10);
+    const a    = Object.assign(document.createElement('a'),
+      { href:url, download:`ist_db_backup_${date}.json` });
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
+    showToast('Database downloaded successfully','success');
+  } catch(e) { showToast('Download error: '+e.message,'error'); }
+}
+
+// STATS
 async function loadStats() {
-  const d = await api('/api/admin/stats');
-  if (!d) return;
-  document.getElementById('s-total').textContent   = d.totalKeys;
-  document.getElementById('s-active').textContent  = d.activeKeys;
-  document.getElementById('s-trial').textContent   = d.trialKeys;
-  document.getElementById('s-killed').textContent  = d.killedKeys;
-  document.getElementById('s-expired').textContent = d.expiredKeys;
-  document.getElementById('s-users').textContent   = d.totalUsers;
-
-  document.getElementById('recent-log').innerHTML = (d.recentAudit || []).map(e =>
-    `<div class="log-row">
-      <span class="log-time">${fmtDate(e.timestamp)}</span>
-      <span class="log-action">${e.action}</span>
-      <span class="log-detail">${e.keyCode || ''} ${e.detail || ''}</span>
-    </div>`
-  ).join('');
+  const d = await api('/api/admin/stats'); if (!d) return;
+  document.getElementById('s0').textContent = d.totalKeys;
+  document.getElementById('s1').textContent = d.activeKeys;
+  document.getElementById('s2').textContent = d.trialKeys;
+  document.getElementById('s3').textContent = d.killedKeys;
+  document.getElementById('s4').textContent = d.expiredKeys;
+  document.getElementById('s5').textContent = d.totalUsers;
+  document.getElementById('recent-log').innerHTML = (d.recentAudit||[])
+    .map(e=>`<div class="lr"><span class="lt">${fmtDate(e.timestamp)}</span>
+      <span class="la">${e.action}</span>
+      <span class="ld">${e.keyCode||''} ${e.detail||''}</span></div>`).join('');
 }
 
-// ── Generate Key ──────────────────────────────────────────────────────────────
+// GENERATE KEY
+// NOTE: sends 'plan' field to match server.js SECTION 11
 async function generateKey() {
-  const tier  = document.getElementById('gen-tier').value;
-  const name  = document.getElementById('gen-name').value;
-  const email = document.getElementById('gen-email').value;
-  const notes = document.getElementById('gen-notes').value;
-  const d = await api('/api/admin/generate-key', 'POST',
-    { tier, customerName: name, customerEmail: email, notes });
-  if (!d || !d.success) { showToast('Generation failed', 'error'); return; }
-  document.getElementById('key-display').textContent = d.key.keyCode;
+  const plan  = document.getElementById('gen-plan').value;
+  const name  = document.getElementById('gen-name').value.trim();
+  const email = document.getElementById('gen-email').value.trim();
+  const notes = document.getElementById('gen-notes').value.trim();
+  const d = await api('/api/admin/generate-key','POST',
+    { plan, customerName:name, customerEmail:email, notes });
+  if (!d||!d.success) { showToast('Generation failed','error'); return; }
+  const keys = d.keys || [d.key];
+  document.getElementById('key-display-area').innerHTML = keys.map((k,i)=>`
+    <div style="margin-bottom:8px">
+      ${keys.length>1?`<div style="font-size:11px;color:var(--text2);margin-bottom:2px">KEY ${i+1} OF ${keys.length}</div>`:''}
+      <div class="kcd">${k.keyCode}</div>
+    </div>`).join('');
   document.getElementById('key-meta').textContent =
-    `${d.key.label}  ·  ${d.key.channels} channels  ·  Expires: ${fmtDate(d.key.expiresAt)}`;
+    `${keys[0].label||plan} · 1024-ch Gold · Expires: ${fmtDate(keys[0].expiresAt)}`;
   document.getElementById('key-result').style.display = 'block';
-  showToast('Key generated' + (email ? ' — email sent' : ''), 'success');
+  showToast(`${d.keyCount||1} key(s) generated${email?' — email sent':''}`, 'success');
   loadStats();
 }
 
-function copyKey() {
-  navigator.clipboard.writeText(document.getElementById('key-display').textContent);
-  showToast('Key copied!', 'success');
+function copyAllKeys() {
+  const codes = Array.from(document.querySelectorAll('.kcd')).map(el=>el.textContent);
+  navigator.clipboard.writeText(codes.join('\n'));
+  showToast('Key(s) copied!','success');
 }
 
 async function generateBulk() {
-  const count = parseInt(document.getElementById('bulk-count').value) || 5;
-  const keys  = [];
-  for (let i = 0; i < count; i++) {
-    const d = await api('/api/admin/generate-key', 'POST', { tier: 'TRIAL' });
-    if (d && d.success) keys.push(d.key.keyCode);
+  const count = parseInt(document.getElementById('bulk-count').value)||5;
+  const keys = [];
+  for (let i=0; i<count; i++) {
+    const d = await api('/api/admin/generate-key','POST',{ plan:'TRIAL' });
+    if (d&&d.success) keys.push(...(d.keys||[d.key]));
   }
-  document.getElementById('bulk-result').innerHTML =
-    keys.map(k => `<div>${k}</div>`).join('');
-  showToast(`${keys.length} trial keys generated`, 'success');
+  document.getElementById('bulk-result').innerHTML = keys.map(k=>`<div>${k.keyCode}</div>`).join('');
+  showToast(`${keys.length} trial keys generated`,'success');
   loadStats();
 }
 
-// ── Keys Table ────────────────────────────────────────────────────────────────
+// ALL KEYS — reads k.plan (not k.tier)
 async function loadKeys() {
-  const d = await api('/api/admin/keys');
-  if (!d) return;
+  const d = await api('/api/admin/keys'); if (!d) return;
   allKeys = d.keys || [];
   renderKeys(allKeys);
 }
 
 function filterKeys() {
   const q = document.getElementById('key-search').value.toLowerCase();
-  renderKeys(allKeys.filter(k =>
-    (k.keyCode||'').toLowerCase().includes(q) ||
-    (k.customerEmail||'').toLowerCase().includes(q) ||
-    (k.customerName||'').toLowerCase().includes(q)
+  renderKeys(allKeys.filter(k=>
+    (k.keyCode||'').toLowerCase().includes(q)||
+    (k.customerEmail||'').toLowerCase().includes(q)||
+    (k.customerName||'').toLowerCase().includes(q)||
+    (k.plan||'').toLowerCase().includes(q)||
+    (k.label||'').toLowerCase().includes(q)
   ));
 }
 
 function renderKeys(keys) {
+  if (!keys||!keys.length) {
+    document.getElementById('keys-body').innerHTML =
+      '<tr><td colspan="8" style="text-align:center;color:var(--text2);padding:24px">No keys found</td></tr>';
+    return;
+  }
+  const now = new Date();
   document.getElementById('keys-body').innerHTML = keys.map(k => {
-    const expired = new Date(k.expiresAt) < new Date() && k.status !== 'KILLED';
-    const status  = k.status === 'KILLED' ? 'killed' : expired ? 'expired' : k.status.toLowerCase();
+    const expired = new Date(k.expiresAt)<now && k.status!=='KILLED';
+    const sClass  = k.status==='KILLED'?'killed': expired?'expired': k.status==='ACTIVE'?'active':'pending';
+    const sLabel  = k.status==='KILLED'?'KILLED': expired?'EXPIRED': k.status==='ACTIVE'?'ACTIVE':'PENDING';
+    // Plan badge uses k.plan field (server stores 'plan' not 'tier')
+    const planId  = (k.plan||'trial').toLowerCase();
+    const planLbl = k.label || k.plan || '—';
     return `<tr>
       <td class="mono">${k.keyCode}</td>
-      <td><span class="badge badge-${k.tier.toLowerCase()}">${k.tier}</span></td>
-      <td><span class="badge badge-${status}">${expired ? 'EXPIRED' : k.status}</span></td>
+      <td><span class="badge badge-${planId}">${planLbl}</span></td>
+      <td><span class="badge badge-${sClass}">${sLabel}</span></td>
       <td style="font-size:12px">
-        ${k.customerName || '—'}<br/>
-        <span style="color:var(--text2)">${k.customerEmail || ''}</span>
+        ${k.customerName?`<div style="font-weight:500">${k.customerName}</div>`:''}
+        <div style="color:var(--text2)">${k.customerEmail||'—'}</div>
       </td>
-      <td style="font-size:12px;color:var(--text2)">
-        ${k.hardwareId ? k.hardwareId.slice(0,14)+'...' : 'Not activated'}
+      <td style="font-size:11px;color:var(--text2)">
+        ${k.hardwareId?'🔒 '+k.hardwareId.slice(0,14)+'...':'⏳ Not activated yet'}
       </td>
       <td style="font-size:12px">${fmtDate(k.expiresAt)}</td>
-      <td style="font-size:12px;color:var(--text2)">${k.lastSeen ? fmtDate(k.lastSeen) : '—'}</td>
-      <td><div class="action-row">
-        ${k.status !== 'KILLED'
-          ? `<button class="btn btn-danger btn-sm" onclick="killKey('${k.keyCode}')">Kill</button>`
-          : `<button class="btn btn-success btn-sm" onclick="reviveKey('${k.keyCode}')">Revive</button>`}
+      <td style="font-size:12px;color:var(--text2)">${k.lastSeen?fmtDate(k.lastSeen):'—'}</td>
+      <td><div class="ar">
+        ${k.status!=='KILLED'
+          ?`<button class="btn btn-danger btn-sm" onclick="killKey('${k.keyCode}')">Kill</button>`
+          :`<button class="btn btn-success btn-sm" onclick="reviveKey('${k.keyCode}')">Revive</button>`}
         <button class="btn btn-gold btn-sm" onclick="openExtend('${k.keyCode}')">Extend</button>
-      </div></td>
-    </tr>`;
+      </div></td></tr>`;
   }).join('');
 }
 
 async function killKey(code) {
-  if (!confirm(`Kill key ${code}?\nThe customer will be immediately locked out.`)) return;
-  await api('/api/admin/kill-key', 'POST', { keyCode: code });
-  showToast('Key killed', 'error'); loadKeys(); loadStats();
+  if (!confirm(`Kill key ${code}?\nCustomer locked out immediately.`)) return;
+  await api('/api/admin/kill-key','POST',{keyCode:code});
+  showToast('Key killed','error'); loadKeys(); loadStats();
 }
 
 async function reviveKey(code) {
-  await api('/api/admin/revive-key', 'POST', { keyCode: code });
-  showToast('Key revived', 'success'); loadKeys(); loadStats();
+  await api('/api/admin/revive-key','POST',{keyCode:code});
+  showToast('Key revived','success'); loadKeys(); loadStats();
 }
 
-function openExtend(code) {
-  document.getElementById('extend-key-code').value = code;
-  document.getElementById('extend-modal').classList.add('open');
-}
-function closeExtend() { document.getElementById('extend-modal').classList.remove('open'); }
+function openExtend(code) { document.getElementById('extend-key-code').value=code; document.getElementById('extend-modal').classList.add('open'); }
+function closeExtend()    { document.getElementById('extend-modal').classList.remove('open'); }
 async function doExtend() {
-  const code = document.getElementById('extend-key-code').value;
-  const days = parseInt(document.getElementById('extend-days').value);
-  await api('/api/admin/extend-key', 'POST', { keyCode: code, days });
-  closeExtend(); showToast(`Extended by ${days} days`, 'success'); loadKeys();
+  const code=document.getElementById('extend-key-code').value;
+  const days=parseInt(document.getElementById('extend-days').value);
+  await api('/api/admin/extend-key','POST',{keyCode:code,days});
+  closeExtend(); showToast(`Extended by ${days} days`,'success'); loadKeys();
 }
 
-// ── Users ─────────────────────────────────────────────────────────────────────
 async function loadUsers() {
-  const d = await api('/api/admin/users');
-  if (!d) return;
-  allUsers = d.users || [];
-  document.getElementById('users-body').innerHTML = allUsers.map(u => `
-    <tr>
-      <td style="font-weight:500">${u.name}</td>
-      <td style="color:var(--primary)">${u.email}</td>
-      <td style="font-size:12px;color:var(--text2)">${fmtDate(u.createdAt)}</td>
-    </tr>
-  `).join('');
+  const d = await api('/api/admin/users'); if (!d) return;
+  document.getElementById('users-body').innerHTML = (d.users||[]).map(u=>`<tr>
+    <td style="font-weight:500">${u.name}</td>
+    <td style="color:var(--primary)">${u.email}</td>
+    <td style="font-size:12px;color:var(--text2)">${fmtDate(u.createdAt)}</td></tr>`).join('');
 }
 
-// ── Audit ─────────────────────────────────────────────────────────────────────
 async function loadAudit() {
-  const d = await api('/api/admin/audit');
-  if (!d) return;
-  document.getElementById('audit-container').innerHTML = (d.log || []).map(e =>
-    `<div class="log-row">
-      <span class="log-time">${fmtDate(e.timestamp)}</span>
-      <span class="log-action">${e.action}</span>
-      <span class="log-detail">${e.keyCode || ''} ${e.detail || ''}
-        <span style="color:#bbb"> ${e.ip || ''}</span></span>
-    </div>`
-  ).join('');
+  const d = await api('/api/admin/audit'); if (!d) return;
+  document.getElementById('audit-container').innerHTML = (d.log||[]).map(e=>`
+    <div class="lr"><span class="lt">${fmtDate(e.timestamp)}</span>
+    <span class="la">${e.action}</span>
+    <span class="ld">${e.keyCode||''} ${e.detail||''} <span style="color:#bbb">${e.ip||''}</span></span></div>`).join('');
 }
 
-// ── Utilities ─────────────────────────────────────────────────────────────────
 function fmtDate(iso) {
   if (!iso) return '—';
-  return new Date(iso).toLocaleString('en-IN', { dateStyle:'medium', timeStyle:'short' });
+  return new Date(iso).toLocaleString('en-IN',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
 }
 
-function showToast(msg, type='success') {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = `toast show ${type}`;
-  setTimeout(() => t.className = 'toast', 3000);
+function showToast(msg,type='success') {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className=`toast show ${type}`;
+  setTimeout(()=>t.className='toast',3500);
 }
-</script>
-</body>
-</html>
+
