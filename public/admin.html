@@ -166,6 +166,19 @@
       .toast.success { background: var(--green); }
       .toast.error { background: var(--red); }
       .toast.info { background: var(--accent); }
+
+      /* Mobile Responsiveness */
+      @media (max-width: 768px) {
+        .layout { grid-template-columns: 1fr; }
+        .sidebar { display: flex; overflow-x: auto; padding: 12px; border-right: none; border-bottom: 1px solid var(--border); }
+        .nav-item { margin-bottom: 0; margin-right: 8px; white-space: nowrap; }
+        .stats-row { grid-template-columns: 1fr 1fr; }
+        .login-card { width: 90%; padding: 32px; }
+        .gen-form { flex-direction: column; align-items: stretch; }
+        .gen-form .fg { width: 100%; }
+        .gen-form select, .gen-form input { width: 100% !important; }
+        .h-right .admin-tag { display: none; }
+      }
     </style>
   </head>
   <body>
