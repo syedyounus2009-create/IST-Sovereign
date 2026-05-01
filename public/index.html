@@ -1,660 +1,1783 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="dark">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>IST-Sovereign | Windows Performance Agent</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IST-Sovereign | Windows Performance Agent</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-/* ══ THEME VARIABLES ══════════════════════════════════════════════════ */
-[data-theme="dark"]{
-  --bg:#0d1b2a;--surf:#1b2b3a;--surf2:#162232;
-  --text:#e2e8f0;--text2:#7a9ab0;--border:#1e3448;
-  --primary:#4a9eff;--primary-h:#2979e0;
-  --card-bg:#1b2b3a;--nav-bg:rgba(13,27,42,0.97);
-  --input-bg:#0d1b2a;--modal-bg:#1b2b3a;
-  --green:#00e676;--red:#ff4d6d;--gold:#ffd166;
-  --result-bg:#162232;--footer-bg:#0a1520;
-}
-[data-theme="light"]{
-  --bg:#ffffff;--surf:#f8f9fa;--surf2:#f1f3f4;
-  --text:#202124;--text2:#5f6368;--border:#dadce0;
-  --primary:#1a73e8;--primary-h:#174ea6;
-  --card-bg:#ffffff;--nav-bg:rgba(255,255,255,0.97);
-  --input-bg:#ffffff;--modal-bg:#ffffff;
-  --green:#137333;--red:#c5221f;--gold:#b06000;
-  --result-bg:#f8f9fa;--footer-bg:#f8f9fa;
-}
+      /* ══ THEME VARIABLES ══════════════════════════════════════════════════ */
+      [data-theme="dark"] {
+        --bg: #0d1b2a;
+        --surf: #1b2b3a;
+        --surf2: #162232;
+        --text: #e2e8f0;
+        --text2: #7a9ab0;
+        --border: #1e3448;
+        --primary: #4a9eff;
+        --primary-h: #2979e0;
+        --card-bg: #1b2b3a;
+        --nav-bg: rgba(13, 27, 42, 0.97);
+        --input-bg: #0d1b2a;
+        --modal-bg: #1b2b3a;
+        --green: #00e676;
+        --red: #ff4d6d;
+        --gold: #ffd166;
+        --result-bg: #162232;
+        --footer-bg: #0a1520;
+      }
+      [data-theme="light"] {
+        --bg: #ffffff;
+        --surf: #f8f9fa;
+        --surf2: #f1f3f4;
+        --text: #202124;
+        --text2: #5f6368;
+        --border: #dadce0;
+        --primary: #1a73e8;
+        --primary-h: #174ea6;
+        --card-bg: #ffffff;
+        --nav-bg: rgba(255, 255, 255, 0.97);
+        --input-bg: #ffffff;
+        --modal-bg: #ffffff;
+        --green: #137333;
+        --red: #c5221f;
+        --gold: #b06000;
+        --result-bg: #f8f9fa;
+        --footer-bg: #f8f9fa;
+      }
 
-body{font-family:'Roboto',sans-serif;background:var(--bg);
-  color:var(--text);-webkit-font-smoothing:antialiased;
-  transition:background 0.3s,color 0.3s}
-a{color:var(--primary);text-decoration:none}
+      body {
+        font-family: "Roboto", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        -webkit-font-smoothing: antialiased;
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+      a {
+        color: var(--primary);
+        text-decoration: none;
+      }
 
-/* ══ NAV ══════════════════════════════════════════════════════════════ */
-nav{position:sticky;top:0;z-index:500;background:var(--nav-bg);
-  border-bottom:1px solid var(--border);backdrop-filter:blur(10px);
-  padding:0 32px;height:58px;display:flex;align-items:center;
-  justify-content:space-between}
-.logo{font-size:18px;font-weight:500;color:var(--text)}
-.logo span{color:var(--primary)}
-.nav-links{display:flex;gap:24px;align-items:center}
-.nav-links a{color:var(--text2);font-size:14px;font-weight:500;cursor:pointer}
-.nav-links a:hover{color:var(--text)}
-.btn{display:inline-flex;align-items:center;justify-content:center;
-  padding:8px 18px;font-size:14px;font-weight:500;border-radius:6px;
-  cursor:pointer;border:1px solid transparent;transition:all 0.2s;
-  font-family:inherit;text-decoration:none}
-.btn-primary{background:var(--primary);color:white}
-.btn-primary:hover{background:var(--primary-h)}
-.btn-outline{background:transparent;color:var(--primary);border-color:var(--border)}
-.btn-outline:hover{background:var(--surf)}
-.btn-download-nav{background:var(--green);color:var(--bg);font-weight:700;
-  padding:7px 16px;font-size:13px}
-[data-theme="light"] .btn-download-nav{color:white}
-.theme-btn{background:var(--surf);border:1px solid var(--border);
-  border-radius:20px;padding:5px 12px;cursor:pointer;font-size:13px;
-  color:var(--text2);font-family:inherit;transition:all 0.2s}
-.theme-btn:hover{border-color:var(--primary)}
+      /* ══ NAV ══════════════════════════════════════════════════════════════ */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 500;
+        background: var(--nav-bg);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(10px);
+        padding: 0 32px;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .logo {
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--text);
+      }
+      .logo span {
+        color: var(--primary);
+      }
+      .nav-links {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+      }
+      .nav-links a {
+        color: var(--text2);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 18px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 6px;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: all 0.2s;
+        font-family: inherit;
+        text-decoration: none;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: white;
+      }
+      .btn-primary:hover {
+        background: var(--primary-h);
+      }
+      .btn-outline {
+        background: transparent;
+        color: var(--primary);
+        border-color: var(--border);
+      }
+      .btn-outline:hover {
+        background: var(--surf);
+      }
+      .btn-download-nav {
+        background: var(--green);
+        color: var(--bg);
+        font-weight: 700;
+        padding: 7px 16px;
+        font-size: 13px;
+      }
+      [data-theme="light"] .btn-download-nav {
+        color: white;
+      }
+      .theme-btn {
+        background: var(--surf);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 5px 12px;
+        cursor: pointer;
+        font-size: 13px;
+        color: var(--text2);
+        font-family: inherit;
+        transition: all 0.2s;
+      }
+      .theme-btn:hover {
+        border-color: var(--primary);
+      }
 
-/* ══ HERO ══════════════════════════════════════════════════════════════ */
-.hero{text-align:center;padding:80px 24px 60px;max-width:860px;margin:0 auto}
-.hero-badge{display:inline-block;font-size:12px;font-weight:500;
-  letter-spacing:2px;color:var(--primary);
-  border:1px solid var(--border);padding:5px 14px;
-  border-radius:20px;margin-bottom:20px;background:var(--surf)}
-.hero h1{font-size:clamp(32px,5vw,54px);font-weight:400;
-  color:var(--text);margin-bottom:14px;line-height:1.15;letter-spacing:-0.5px}
-.hero h1 strong{color:var(--primary);font-weight:500}
-.hero p{font-size:17px;color:var(--text2);max-width:580px;
-  margin:0 auto 32px;line-height:1.7}
-.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
-.hero-btns .btn{padding:12px 28px;font-size:15px;border-radius:8px}
-.hero-note{font-size:12px;color:var(--text2)}
+      /* ══ HERO ══════════════════════════════════════════════════════════════ */
+      .hero {
+        text-align: center;
+        padding: 80px 24px 60px;
+        max-width: 860px;
+        margin: 0 auto;
+      }
+      .hero-badge {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 2px;
+        color: var(--primary);
+        border: 1px solid var(--border);
+        padding: 5px 14px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+        background: var(--surf);
+      }
+      .hero h1 {
+        font-size: clamp(32px, 5vw, 54px);
+        font-weight: 400;
+        color: var(--text);
+        margin-bottom: 14px;
+        line-height: 1.15;
+        letter-spacing: -0.5px;
+      }
+      .hero h1 strong {
+        color: var(--primary);
+        font-weight: 500;
+      }
+      .hero p {
+        font-size: 17px;
+        color: var(--text2);
+        max-width: 580px;
+        margin: 0 auto 32px;
+        line-height: 1.7;
+      }
+      .hero-btns {
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+      }
+      .hero-btns .btn {
+        padding: 12px 28px;
+        font-size: 15px;
+        border-radius: 8px;
+      }
+      .hero-note {
+        font-size: 12px;
+        color: var(--text2);
+      }
 
-/* ══ RESULTS STRIP ════════════════════════════════════════════════════ */
-.results-strip{background:var(--result-bg);
-  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  padding:32px}
-.results-inner{max-width:960px;margin:0 auto}
-.results-label{font-size:11px;font-weight:500;color:var(--text2);
-  letter-spacing:2px;text-align:center;margin-bottom:20px}
-.results-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
-.result-card{background:var(--card-bg);border:1px solid var(--border);
-  border-radius:8px;padding:16px;text-align:center}
-.result-num{font-size:26px;font-weight:400;line-height:1}
-.result-lbl{font-size:10px;color:var(--text2);margin-top:5px;font-weight:500;letter-spacing:0.5px}
-.results-note{font-size:11px;color:var(--text2);text-align:center;margin-top:12px}
+      /* ══ RESULTS STRIP ════════════════════════════════════════════════════ */
+      .results-strip {
+        background: var(--result-bg);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        padding: 32px;
+      }
+      .results-inner {
+        max-width: 960px;
+        margin: 0 auto;
+      }
+      .results-label {
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--text2);
+        letter-spacing: 2px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .results-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 12px;
+      }
+      .result-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 16px;
+        text-align: center;
+      }
+      .result-num {
+        font-size: 26px;
+        font-weight: 400;
+        line-height: 1;
+      }
+      .result-lbl {
+        font-size: 10px;
+        color: var(--text2);
+        margin-top: 5px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+      .results-note {
+        font-size: 11px;
+        color: var(--text2);
+        text-align: center;
+        margin-top: 12px;
+      }
 
-/* ══ SECTIONS ═════════════════════════════════════════════════════════ */
-.section{padding:72px 32px}
-.section-inner{max-width:1060px;margin:0 auto}
-.section-tag{font-size:11px;font-weight:500;color:var(--text2);
-  letter-spacing:2px;margin-bottom:8px}
-.section-title{font-size:clamp(24px,3.5vw,36px);font-weight:400;
-  color:var(--text);margin-bottom:12px}
-.section-title span{color:var(--primary)}
-.section-sub{font-size:15px;color:var(--text2);line-height:1.7;
-  max-width:580px;margin-bottom:40px}
+      /* ══ SECTIONS ═════════════════════════════════════════════════════════ */
+      .section {
+        padding: 72px 32px;
+      }
+      .section-inner {
+        max-width: 1060px;
+        margin: 0 auto;
+      }
+      .section-tag {
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--text2);
+        letter-spacing: 2px;
+        margin-bottom: 8px;
+      }
+      .section-title {
+        font-size: clamp(24px, 3.5vw, 36px);
+        font-weight: 400;
+        color: var(--text);
+        margin-bottom: 12px;
+      }
+      .section-title span {
+        color: var(--primary);
+      }
+      .section-sub {
+        font-size: 15px;
+        color: var(--text2);
+        line-height: 1.7;
+        max-width: 580px;
+        margin-bottom: 40px;
+      }
 
-/* ══ FEATURES ═════════════════════════════════════════════════════════ */
-.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.feat-card{background:var(--card-bg);border:1px solid var(--border);
-  border-radius:10px;padding:24px;transition:transform 0.2s,border-color 0.2s}
-.feat-card:hover{transform:translateY(-2px);border-color:var(--primary)}
-.feat-icon{width:38px;height:38px;border-radius:8px;
-  background:var(--surf2);display:flex;align-items:center;
-  justify-content:center;font-size:18px;margin-bottom:14px}
-.feat-title{font-size:16px;font-weight:500;color:var(--text);margin-bottom:8px}
-.feat-desc{font-size:13px;color:var(--text2);line-height:1.6}
-.feat-pill{display:inline-block;margin-top:10px;font-size:11px;
-  background:var(--surf2);color:var(--primary);
-  padding:3px 10px;border-radius:12px;border:1px solid var(--border)}
+      /* ══ FEATURES ═════════════════════════════════════════════════════════ */
+      .feat-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+      .feat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 24px;
+        transition:
+          transform 0.2s,
+          border-color 0.2s;
+      }
+      .feat-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--primary);
+      }
+      .feat-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        background: var(--surf2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        margin-bottom: 14px;
+      }
+      .feat-title {
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--text);
+        margin-bottom: 8px;
+      }
+      .feat-desc {
+        font-size: 13px;
+        color: var(--text2);
+        line-height: 1.6;
+      }
+      .feat-pill {
+        display: inline-block;
+        margin-top: 10px;
+        font-size: 11px;
+        background: var(--surf2);
+        color: var(--primary);
+        padding: 3px 10px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+      }
 
-/* ══ DOWNLOAD SECTION ════════════════════════════════════════════════ */
-.dl-box{background:var(--surf);border:1px solid var(--border);
-  border-radius:12px;padding:40px;text-align:center;max-width:560px;margin:0 auto}
-.dl-icon{font-size:48px;margin-bottom:14px}
-.dl-title{font-size:22px;font-weight:500;color:var(--text);margin-bottom:6px}
-.dl-version{font-size:12px;color:var(--text2);margin-bottom:24px}
-.dl-btn{display:inline-flex;align-items:center;gap:10px;
-  padding:16px 40px;background:var(--primary);color:white;
-  border:none;border-radius:8px;font-size:17px;font-weight:500;
-  cursor:pointer;font-family:inherit;transition:all 0.2s;margin-bottom:14px}
-.dl-btn:hover{background:var(--primary-h);transform:translateY(-1px)}
-.dl-req{font-size:12px;color:var(--text2);line-height:2.2}
-.dl-steps{max-width:560px;margin:32px auto 0;text-align:left}
-.dl-step{display:flex;gap:14px;padding:14px;
-  background:var(--card-bg);border:1px solid var(--border);
-  border-radius:8px;margin-bottom:8px;align-items:flex-start}
-.dl-step-n{width:26px;height:26px;border-radius:50%;
-  background:var(--primary);color:white;display:flex;
-  align-items:center;justify-content:center;
-  font-size:12px;font-weight:700;flex-shrink:0}
-.dl-step-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:2px}
-.dl-step-desc{font-size:12px;color:var(--text2)}
+      /* ══ DOWNLOAD SECTION ════════════════════════════════════════════════ */
+      .dl-box {
+        background: var(--surf);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 40px;
+        text-align: center;
+        max-width: 560px;
+        margin: 0 auto;
+      }
+      .dl-icon {
+        font-size: 48px;
+        margin-bottom: 14px;
+      }
+      .dl-title {
+        font-size: 22px;
+        font-weight: 500;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+      .dl-version {
+        font-size: 12px;
+        color: var(--text2);
+        margin-bottom: 24px;
+      }
+      .dl-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 40px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 17px;
+        font-weight: 500;
+        cursor: pointer;
+        font-family: inherit;
+        transition: all 0.2s;
+        margin-bottom: 14px;
+      }
+      .dl-btn:hover {
+        background: var(--primary-h);
+        transform: translateY(-1px);
+      }
+      .dl-req {
+        font-size: 12px;
+        color: var(--text2);
+        line-height: 2.2;
+      }
+      .dl-steps {
+        max-width: 560px;
+        margin: 32px auto 0;
+        text-align: left;
+      }
+      .dl-step {
+        display: flex;
+        gap: 14px;
+        padding: 14px;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin-bottom: 8px;
+        align-items: flex-start;
+      }
+      .dl-step-n {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .dl-step-title {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text);
+        margin-bottom: 2px;
+      }
+      .dl-step-desc {
+        font-size: 12px;
+        color: var(--text2);
+      }
 
-/* ══ PRICING ══════════════════════════════════════════════════════════ */
-.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.price-card{background:var(--card-bg);border:1px solid var(--border);
-  border-radius:10px;padding:22px;text-align:center;position:relative;
-  transition:transform 0.2s}
-.price-card:hover{transform:translateY(-2px)}
-.price-card.featured{border:2px solid var(--primary)}
-.price-card.featured::before{content:'MOST POPULAR';position:absolute;
-  top:-11px;left:50%;transform:translateX(-50%);
-  background:var(--primary);color:white;
-  font-size:10px;font-weight:500;padding:3px 12px;border-radius:10px}
-.price-tier{font-size:10px;font-weight:500;letter-spacing:2px;
-  color:var(--text2);margin-bottom:12px}
-.price-inr{font-size:30px;font-weight:400;color:var(--text);line-height:1}
-.price-usd{font-size:12px;color:var(--text2);margin:4px 0 2px}
-.price-period{font-size:11px;color:var(--text2);margin-bottom:16px}
-.price-divider{height:1px;background:var(--border);margin:14px 0}
-.price-feat{font-size:12px;color:var(--text2);padding:4px 0;
-  display:flex;align-items:center;gap:7px;justify-content:center}
-.price-feat::before{content:'';width:5px;height:5px;
-  border-radius:50%;background:var(--primary);flex-shrink:0}
-.price-btn{display:block;margin-top:18px;padding:10px;border-radius:6px;
-  font-size:13px;font-weight:500;cursor:pointer;width:100%;
-  border:1px solid var(--primary);color:var(--primary);
-  background:transparent;font-family:inherit;transition:all 0.2s}
-.price-card.featured .price-btn,.price-btn:hover{
-  background:var(--primary);color:white}
-.pay-methods{display:flex;flex-wrap:wrap;gap:8px;
-  justify-content:center;margin-top:20px}
-.pay-badge{padding:5px 12px;border:1px solid var(--border);
-  border-radius:14px;font-size:12px;color:var(--text2);
-  background:var(--card-bg)}
+      /* ══ PRICING ══════════════════════════════════════════════════════════ */
+      .price-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+      .price-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 22px;
+        text-align: center;
+        position: relative;
+        transition: transform 0.2s;
+      }
+      .price-card:hover {
+        transform: translateY(-2px);
+      }
+      .price-card.featured {
+        border: 2px solid var(--primary);
+      }
+      .price-card.featured::before {
+        content: "MOST POPULAR";
+        position: absolute;
+        top: -11px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--primary);
+        color: white;
+        font-size: 10px;
+        font-weight: 500;
+        padding: 3px 12px;
+        border-radius: 10px;
+      }
+      .price-tier {
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 2px;
+        color: var(--text2);
+        margin-bottom: 12px;
+      }
+      .price-inr {
+        font-size: 30px;
+        font-weight: 400;
+        color: var(--text);
+        line-height: 1;
+      }
+      .price-usd {
+        font-size: 12px;
+        color: var(--text2);
+        margin: 4px 0 2px;
+      }
+      .price-period {
+        font-size: 11px;
+        color: var(--text2);
+        margin-bottom: 16px;
+      }
+      .price-divider {
+        height: 1px;
+        background: var(--border);
+        margin: 14px 0;
+      }
+      .price-feat {
+        font-size: 12px;
+        color: var(--text2);
+        padding: 4px 0;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        justify-content: center;
+      }
+      .price-feat::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--primary);
+        flex-shrink: 0;
+      }
+      .price-btn {
+        display: block;
+        margin-top: 18px;
+        padding: 10px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        width: 100%;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        background: transparent;
+        font-family: inherit;
+        transition: all 0.2s;
+      }
+      .price-card.featured .price-btn,
+      .price-btn:hover {
+        background: var(--primary);
+        color: white;
+      }
+      .pay-methods {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .pay-badge {
+        padding: 5px 12px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        font-size: 12px;
+        color: var(--text2);
+        background: var(--card-bg);
+      }
 
-/* ══ AUTH MODAL ═══════════════════════════════════════════════════════ */
-.overlay{display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,0.6);z-index:2000;
-  align-items:center;justify-content:center}
-.overlay.open{display:flex}
-.modal{background:var(--modal-bg);border:1px solid var(--border);
-  border-radius:12px;padding:36px;width:100%;max-width:400px;
-  position:relative;box-shadow:0 12px 32px rgba(0,0,0,0.25)}
-.modal-close{position:absolute;top:14px;right:16px;
-  background:none;border:none;font-size:20px;
-  cursor:pointer;color:var(--text2);line-height:1}
-.modal-close:hover{color:var(--red)}
-.modal-logo{font-size:16px;font-weight:500;color:var(--text);
-  margin-bottom:4px}
-.modal-title{font-size:22px;font-weight:400;color:var(--text);margin-bottom:6px}
-.modal-sub{font-size:13px;color:var(--text2);margin-bottom:22px}
-.modal-tabs{display:flex;background:var(--surf2);
-  border-radius:8px;padding:3px;margin-bottom:22px;gap:0}
-.modal-tab{flex:1;padding:8px;text-align:center;cursor:pointer;
-  font-size:12px;font-weight:500;color:var(--text2);
-  border-radius:6px;transition:all 0.2s}
-.modal-tab.active{background:var(--primary);color:white}
-.form-lbl{font-size:11px;font-weight:500;color:var(--text2);
-  letter-spacing:0.5px;margin-bottom:5px;display:block}
-.form-inp{width:100%;padding:10px 13px;border:1px solid var(--border);
-  border-radius:6px;font-size:14px;font-family:inherit;outline:none;
-  background:var(--input-bg);color:var(--text);
-  transition:border-color 0.2s;margin-bottom:12px}
-.form-inp:focus{border-color:var(--primary)}
-.form-btn{width:100%;padding:11px;background:var(--primary);
-  color:white;border:none;border-radius:7px;font-size:15px;
-  font-weight:500;cursor:pointer;font-family:inherit;
-  transition:all 0.2s;margin-top:4px}
-.form-btn:hover{background:var(--primary-h)}
-.modal-note{font-size:12px;color:var(--text2);text-align:center;
-  margin-top:14px;line-height:1.7}
-.modal-note a{cursor:pointer;color:var(--primary)}
-.form-err{font-size:12px;color:var(--red);margin-bottom:8px;display:none}
+      /* ══ AUTH MODAL ═══════════════════════════════════════════════════════ */
+      .overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+      }
+      .overlay.open {
+        display: flex;
+      }
+      .modal {
+        background: var(--modal-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 36px;
+        width: 100%;
+        max-width: 400px;
+        position: relative;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+      }
+      .modal-close {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: var(--text2);
+        line-height: 1;
+      }
+      .modal-close:hover {
+        color: var(--red);
+      }
+      .modal-logo {
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--text);
+        margin-bottom: 4px;
+      }
+      .modal-title {
+        font-size: 22px;
+        font-weight: 400;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+      .modal-sub {
+        font-size: 13px;
+        color: var(--text2);
+        margin-bottom: 22px;
+      }
+      .modal-tabs {
+        display: flex;
+        background: var(--surf2);
+        border-radius: 8px;
+        padding: 3px;
+        margin-bottom: 22px;
+        gap: 0;
+      }
+      .modal-tab {
+        flex: 1;
+        padding: 8px;
+        text-align: center;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text2);
+        border-radius: 6px;
+        transition: all 0.2s;
+      }
+      .modal-tab.active {
+        background: var(--primary);
+        color: white;
+      }
+      .form-lbl {
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--text2);
+        letter-spacing: 0.5px;
+        margin-bottom: 5px;
+        display: block;
+      }
+      .form-inp {
+        width: 100%;
+        padding: 10px 13px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 14px;
+        font-family: inherit;
+        outline: none;
+        background: var(--input-bg);
+        color: var(--text);
+        transition: border-color 0.2s;
+        margin-bottom: 12px;
+      }
+      .form-inp:focus {
+        border-color: var(--primary);
+      }
+      .form-btn {
+        width: 100%;
+        padding: 11px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 7px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        font-family: inherit;
+        transition: all 0.2s;
+        margin-top: 4px;
+      }
+      .form-btn:hover {
+        background: var(--primary-h);
+      }
+      .modal-note {
+        font-size: 12px;
+        color: var(--text2);
+        text-align: center;
+        margin-top: 14px;
+        line-height: 1.7;
+      }
+      .modal-note a {
+        cursor: pointer;
+        color: var(--primary);
+      }
+      .form-err {
+        font-size: 12px;
+        color: var(--red);
+        margin-bottom: 8px;
+        display: none;
+      }
 
-/* ══ FOOTER ═══════════════════════════════════════════════════════════ */
-footer{background:var(--footer-bg);border-top:1px solid var(--border);
-  padding:28px 32px;text-align:center;font-size:13px;color:var(--text2)}
-footer a{color:var(--primary);margin:0 8px}
-</style>
-</head>
-<body>
-
-<!-- NAV -->
-<nav>
-  <div class="logo">IST-<span>Sovereign</span></div>
-  <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#download">Download</a>
-    <a href="#pricing">Pricing</a>
-    <a onclick="openModal('signin')" class="btn btn-outline" style="padding:6px 14px">Sign in</a>
-    <a onclick="openModal('signup')" class="btn btn-primary" style="padding:6px 14px">Free Trial</a>
-    <a href="#download" class="btn btn-download-nav">⬇ Download</a>
-    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">☀ Light</button>
-  </div>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-badge">WINDOWS PERFORMANCE AGENT — v2.1 — FREE 7-DAY TRIAL</div>
-  <h1>Make your Windows PC<br/><strong>measurably faster.</strong> Automatically.</h1>
-  <p>IST-Sovereign is a Windows program you download and run. It organises your CPU, purges RAM, and removes background noise — delivering proven performance gains on any hardware.</p>
-  <div class="hero-btns">
-    <a href="#download" class="btn btn-primary">⬇ Download for Windows</a>
-    <a onclick="openModal('signup')" class="btn btn-outline">Get Free 7-Day Trial</a>
-  </div>
-  <div class="hero-note">Windows 10 / 11 · No installation required · Single .exe file · Free trial — no credit card</div>
-</div>
-
-<!-- RESULTS STRIP -->
-<div class="results-strip">
-  <div class="results-inner">
-    <div class="results-label">PROVEN RESULTS — LIVE TEST ON INTEL i5-3210M (13-YEAR-OLD LAPTOP, 249 PROCESSES)</div>
-    <div class="results-grid">
-      <div class="result-card"><div class="result-num" style="color:var(--primary)">+97%</div><div class="result-lbl">IPC SPEED GAIN</div></div>
-      <div class="result-card"><div class="result-num" style="color:var(--green)">2.6%</div><div class="result-lbl">CPU LOAD</div></div>
-      <div class="result-card"><div class="result-num" style="color:var(--primary)">5.88 GB</div><div class="result-lbl">RAM FREED</div></div>
-      <div class="result-card"><div class="result-num" style="color:var(--gold)">87</div><div class="result-lbl">PROCESSES SILENCED</div></div>
-      <div class="result-card"><div class="result-num" style="color:var(--green)">89%</div><div class="result-lbl">EFFICIENCY</div></div>
-      <div class="result-card"><div class="result-num" style="color:var(--primary)">0.5ms</div><div class="result-lbl">TIMER PRECISION</div></div>
-    </div>
-    <div class="results-note">All metrics verified via Windows Task Manager. No hardware changes. Same laptop before and after.</div>
-  </div>
-</div>
-
-<!-- FEATURES -->
-<div id="features" class="section" style="background:var(--surf)">
-  <div class="section-inner">
-    <div class="section-tag">9 REAL OPTIMISATIONS</div>
-    <h2 class="section-title">Everything IST-Sovereign <span>does to your PC</span></h2>
-    <p class="section-sub">Every feature below is a genuine Windows API call — not a simulation. Each one is measurable and verifiable via Task Manager.</p>
-    <div class="feat-grid">
-      <div class="feat-card"><div class="feat-icon">⚡</div><div class="feat-title">High Performance Power Plan</div><div class="feat-desc">Activates Ultimate or High Performance mode. Stops CPU throttling. Frequency boosted from 2500 → 2850 MHz instantly on test hardware.</div><span class="feat-pill">Instant activation</span></div>
-      <div class="feat-card"><div class="feat-icon">🎯</div><div class="feat-title">CPU Core Affinity</div><div class="feat-desc">Pins your target app exclusively to performance cores. Background tasks moved to efficiency cores. No more competition for the same silicon.</div><span class="feat-pill">Per-application</span></div>
-      <div class="feat-card"><div class="feat-icon">🧹</div><div class="feat-title">Standby RAM Purge</div><div class="feat-desc">Uses NtSetSystemInformation to flush the Windows standby memory list — same method as RAMMap. Frees gigabytes Windows holds unnecessarily.</div><span class="feat-pill">5.88 GB freed on test</span></div>
-      <div class="feat-card"><div class="feat-icon">⏱</div><div class="feat-title">Timer Resolution 0.5ms</div><div class="feat-desc">Uses NtSetTimerResolution for 0.5ms scheduling — a 31x improvement from Windows default 15.6ms. Eliminates micro-stutters completely.</div><span class="feat-pill">31x improvement</span></div>
-      <div class="feat-card"><div class="feat-icon">🔇</div><div class="feat-title">Background Noise Suppression</div><div class="feat-desc">87 background processes — Search Indexer, Telemetry, OneDrive, WMI, Windows Update — set to IDLE priority. They wait. You work.</div><span class="feat-pill">87 processes silenced</span></div>
-      <div class="feat-card"><div class="feat-icon">🚀</div><div class="feat-title">Process Priority Elevation</div><div class="feat-desc">Opens Win32 process handle and sets HIGH_PRIORITY_CLASS. Re-elevated every 30 seconds — Windows cannot reset it back.</div><span class="feat-pill">Re-elevated every 30s</span></div>
-      <div class="feat-card"><div class="feat-icon">💾</div><div class="feat-title">I/O Priority Boost</div><div class="feat-desc">Raises disk I/O priority via NtSetInformationProcess. Faster file reads for Revit, AutoCAD, dataset imports, and render cache.</div><span class="feat-pill">Faster file access</span></div>
-      <div class="feat-card"><div class="feat-icon">🔋</div><div class="feat-title">CPU Minimum State 100%</div><div class="feat-desc">Disables CPU low-power C-states via powercfg. Keeps the processor at full frequency. No sudden slowdowns during computation.</div><span class="feat-pill">Constant max frequency</span></div>
-      <div class="feat-card"><div class="feat-icon">🌐</div><div class="feat-title">Network TCP Optimisation</div><div class="feat-desc">Enables TCP autotuninglevel and chimney offloading for lower network latency — relevant for cloud apps, remote render farms, and databases.</div><span class="feat-pill">Lower network latency</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- WHO IT HELPS -->
-<div class="section">
-  <div class="section-inner">
-    <div class="section-tag">TARGET USERS</div>
-    <h2 class="section-title">Built for <span>professionals</span> on standard hardware</h2>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
-      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:20px">
-        <div style="font-size:16px;font-weight:500;color:var(--text);margin-bottom:6px">🏗 CAD / Revit / AutoCAD</div>
-        <div style="font-size:13px;color:var(--text2)">Faster model load times, smoother renders, fewer crashes. Ideal for architects and civil engineers on laptops.</div>
+      /* ══ FOOTER ═══════════════════════════════════════════════════════════ */
+      footer {
+        background: var(--footer-bg);
+        border-top: 1px solid var(--border);
+        padding: 28px 32px;
+        text-align: center;
+        font-size: 13px;
+        color: var(--text2);
+      }
+      footer a {
+        color: var(--primary);
+        margin: 0 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <div class="logo">IST-<span>Sovereign</span></div>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#download">Download</a>
+        <a href="#pricing">Pricing</a>
+        <a
+          onclick="openModal('signin')"
+          class="btn btn-outline"
+          style="padding: 6px 14px"
+          >Sign in</a
+        >
+        <a
+          onclick="openModal('signup')"
+          class="btn btn-primary"
+          style="padding: 6px 14px"
+          >Free Trial</a
+        >
+        <a href="#download" class="btn btn-download-nav">⬇ Download</a>
+        <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">
+          ☀ Light
+        </button>
       </div>
-      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:20px">
-        <div style="font-size:16px;font-weight:500;color:var(--text);margin-bottom:6px">🤖 AI / ML / Data Science</div>
-        <div style="font-size:13px;color:var(--text2)">Better GPU utilisation, faster training runs, higher pipeline throughput for Python, TensorFlow, PyTorch.</div>
-      </div>
-      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:20px">
-        <div style="font-size:16px;font-weight:500;color:var(--text);margin-bottom:6px">🎨 3D Rendering / VFX</div>
-        <div style="font-size:13px;color:var(--text2)">Reduced frame times, stable performance throughout long render sessions in Blender, Maya, Cinema 4D.</div>
-      </div>
-      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:20px">
-        <div style="font-size:16px;font-weight:500;color:var(--text);margin-bottom:6px">💻 Software Development</div>
-        <div style="font-size:13px;color:var(--text2)">Faster compile times, more responsive IDEs, quicker build pipelines for VS Code, IntelliJ, and Xcode.</div>
-      </div>
-      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:20px">
-        <div style="font-size:16px;font-weight:500;color:var(--text);margin-bottom:6px">🏦 Banking / Fintech</div>
-        <div style="font-size:13px;color:var(--text2)">Lower transaction processing latency, faster hash throughput, reduced CPU overhead on financial workstations.</div>
-      </div>
-      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:20px">
-        <div style="font-size:16px;font-weight:500;color:var(--text);margin-bottom:6px">🏛 Government IT</div>
-        <div style="font-size:13px;color:var(--text2)">Performance recovery for legacy hardware fleets. Run modern software on older machines without hardware upgrades.</div>
-      </div>
-    </div>
-  </div>
-</div>
+    </nav>
 
-<!-- DOWNLOAD SECTION -->
-<div id="download" class="section" style="background:var(--surf)">
-  <div class="section-inner" style="text-align:center">
-    <div class="section-tag" style="text-align:center">DOWNLOAD</div>
-    <h2 class="section-title" style="text-align:center">Get <span>IST-Sovereign</span> for Windows</h2>
-    <div class="dl-box">
-      <div class="dl-icon">⬇</div>
-      <div class="dl-title">IST-Sovereign.exe</div>
-      <div class="dl-version">Version 2.1.0 · Windows 10 / 11 · 64-bit · ~25 MB</div>
-      <a href="https://ist-sovereign-production.up.railway.app/IST-Sovereign.exe"
-         class="dl-btn" download="IST-Sovereign.exe">
-        ⬇ &nbsp; Download for Windows
-      </a>
-      <div class="dl-req">
-        Windows 10 or 11 · 64-bit only<br/>
-        Right-click → Run as Administrator for full results<br/>
-        Internet connection for key activation
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-badge">
+        WINDOWS PERFORMANCE AGENT — v2.1 — FREE 7-DAY TRIAL
+      </div>
+      <h1>
+        Make your Windows PC<br /><strong>measurably faster.</strong>
+        Automatically.
+      </h1>
+      <p>
+        IST-Sovereign is a Windows program you download and run. It organises
+        your CPU, purges RAM, and removes background noise — delivering proven
+        performance gains on any hardware.
+      </p>
+      <div class="hero-btns">
+        <a href="#download" class="btn btn-primary">⬇ Download for Windows</a>
+        <a onclick="openModal('signup')" class="btn btn-outline"
+          >Get Free 7-Day Trial</a
+        >
+      </div>
+      <div class="hero-note">
+        Windows 10 / 11 · No installation required · Single .exe file · Free
+        trial — no credit card
       </div>
     </div>
-    <div class="dl-steps">
-      <h3 style="font-size:16px;font-weight:500;color:var(--text);margin-bottom:14px">How to get started in 3 steps</h3>
-      <div class="dl-step"><div class="dl-step-n">1</div><div><div class="dl-step-title">Get your free trial key</div><div class="dl-step-desc">Click "Free Trial" in the nav. Register with your email. Your 7-day IST-SIM key is sent to your email instantly. No credit card needed.</div></div></div>
-      <div class="dl-step"><div class="dl-step-n">2</div><div><div class="dl-step-title">Download and run as Administrator</div><div class="dl-step-desc">Download the .exe above. Right-click it → Run as Administrator. No installation needed — it runs directly.</div></div></div>
-      <div class="dl-step"><div class="dl-step-n">3</div><div><div class="dl-step-title">Enter key and activate</div><div class="dl-step-desc">Paste your IST-SIM key, type your target application (e.g. Revit), select channels, and press ACTIVATE. See your results live.</div></div></div>
-    </div>
-  </div>
-</div>
 
-<!-- PRICING -->
-<div id="pricing" class="section">
-  <div class="section-inner">
-    <div class="section-tag">PRICING</div>
-    <h2 class="section-title">Simple, honest <span>pricing</span></h2>
-    <p class="section-sub">Start free for 7 days. No credit card required. All plans include hardware-locked IST-SIM key, live dashboard, and all 9 optimisations.</p>
-    <div style="text-align:center;margin-bottom:20px;padding:12px 20px;
-      background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.25);
-      border-radius:8px;font-size:14px;color:var(--primary)">
-      ★ All plans include 1024-channel Gold performance — maximum optimisation on every device
-    </div>
-    <div style="text-align:center;margin-bottom:20px;padding:12px 20px;
-      background:var(--surf);border:1px solid var(--border);
-      border-radius:8px;font-size:14px;color:var(--primary)">
-      ★ All plans — 1024-channel Gold performance — maximum optimisation on every device
-    </div>
-    <div class="price-grid">
-      <div class="price-card">
-        <div class="price-tier">FREE TRIAL</div>
-        <div style="display:inline-block;background:rgba(255,193,7,0.15);border:1px solid rgba(255,193,7,0.4);color:var(--gold);font-size:11px;font-weight:600;padding:2px 10px;border-radius:12px;margin-bottom:10px">GOLD</div>
-        <div class="price-inr">₹0</div>
-        <div class="price-usd">No payment required</div>
-        <div class="price-period">7 days free</div>
-        <div class="price-divider"></div>
-        <div style="background:var(--surf2);border:1px solid var(--border);border-radius:8px;padding:10px;margin:10px 0;text-align:center">
-          <div style="font-size:28px;font-weight:500;color:var(--primary);line-height:1">1</div>
-          <div style="font-size:11px;color:var(--text2);margin-top:2px">key · 1 device</div>
+    <!-- RESULTS STRIP -->
+    <div class="results-strip">
+      <div class="results-inner">
+        <div class="results-label">
+          PROVEN RESULTS — LIVE TEST ON INTEL i5-3210M (13-YEAR-OLD LAPTOP, 249
+          PROCESSES)
         </div>
-        <div class="price-feat">1024-channel Gold mode</div>
-        <div class="price-feat">All 9 optimisations</div>
-        <div class="price-feat">Full performance</div>
-        <div class="price-feat">Email support</div>
-        <button class="price-btn" onclick="openModal('signup')">Start Free Trial</button>
-      </div>
-      <div class="price-card">
-        <div class="price-tier" style="color:#a0c4ff">STARTER</div>
-        <div style="display:inline-block;background:rgba(255,193,7,0.15);border:1px solid rgba(255,193,7,0.4);color:var(--gold);font-size:11px;font-weight:600;padding:2px 10px;border-radius:12px;margin-bottom:10px">GOLD</div>
-        <div class="price-inr">₹199</div>
-        <div class="price-usd">$3 USD</div>
-        <div class="price-period">per month</div>
-        <div class="price-divider"></div>
-        <div style="background:var(--surf2);border:1px solid var(--border);border-radius:8px;padding:10px;margin:10px 0;text-align:center">
-          <div style="font-size:28px;font-weight:500;color:var(--primary);line-height:1">1</div>
-          <div style="font-size:11px;color:var(--text2);margin-top:2px">key · 1 device</div>
+        <div class="results-grid">
+          <div class="result-card">
+            <div class="result-num" style="color: var(--primary)">+97%</div>
+            <div class="result-lbl">IPC SPEED GAIN</div>
+          </div>
+          <div class="result-card">
+            <div class="result-num" style="color: var(--green)">2.6%</div>
+            <div class="result-lbl">CPU LOAD</div>
+          </div>
+          <div class="result-card">
+            <div class="result-num" style="color: var(--primary)">5.88 GB</div>
+            <div class="result-lbl">RAM FREED</div>
+          </div>
+          <div class="result-card">
+            <div class="result-num" style="color: var(--gold)">87</div>
+            <div class="result-lbl">PROCESSES SILENCED</div>
+          </div>
+          <div class="result-card">
+            <div class="result-num" style="color: var(--green)">89%</div>
+            <div class="result-lbl">EFFICIENCY</div>
+          </div>
+          <div class="result-card">
+            <div class="result-num" style="color: var(--primary)">0.5ms</div>
+            <div class="result-lbl">TIMER PRECISION</div>
+          </div>
         </div>
-        <div class="price-feat">1024-channel Gold mode</div>
-        <div class="price-feat">All 9 optimisations</div>
-        <div class="price-feat">Full performance</div>
-        <div class="price-feat">Email support</div>
-        <button class="price-btn" onclick="buyPlan('STARTER',199)">Buy ₹199</button>
-      </div>
-      <div class="price-card featured">
-        <div class="price-tier" style="color:var(--primary)">PROFESSIONAL</div>
-        <div style="display:inline-block;background:rgba(255,193,7,0.15);border:1px solid rgba(255,193,7,0.4);color:var(--gold);font-size:11px;font-weight:600;padding:2px 10px;border-radius:12px;margin-bottom:10px">GOLD</div>
-        <div class="price-inr">₹499</div>
-        <div class="price-usd">$7 USD</div>
-        <div class="price-period">per month</div>
-        <div class="price-divider"></div>
-        <div style="background:var(--surf2);border:1px solid var(--border);border-radius:8px;padding:10px;margin:10px 0;text-align:center">
-          <div style="font-size:28px;font-weight:500;color:var(--primary);line-height:1">3</div>
-          <div style="font-size:11px;color:var(--text2);margin-top:2px">keys · 3 devices</div>
+        <div class="results-note">
+          All metrics verified via Windows Task Manager. No hardware changes.
+          Same laptop before and after.
         </div>
-        <div class="price-feat">1024-channel Gold mode</div>
-        <div class="price-feat">All 9 optimisations</div>
-        <div class="price-feat">Full performance</div>
-        <div class="price-feat">Priority support</div>
-        <button class="price-btn" onclick="buyPlan('PROFESSIONAL',499)">Buy ₹499</button>
       </div>
-      <div class="price-card">
-        <div class="price-tier" style="color:var(--gold)">BUSINESS</div>
-        <div style="display:inline-block;background:rgba(255,193,7,0.15);border:1px solid rgba(255,193,7,0.4);color:var(--gold);font-size:11px;font-weight:600;padding:2px 10px;border-radius:12px;margin-bottom:10px">GOLD</div>
-        <div class="price-inr">₹999</div>
-        <div class="price-usd">$13 USD</div>
-        <div class="price-period">per month</div>
-        <div class="price-divider"></div>
-        <div style="background:var(--surf2);border:1px solid var(--border);border-radius:8px;padding:10px;margin:10px 0;text-align:center">
-          <div style="font-size:28px;font-weight:500;color:var(--primary);line-height:1">8</div>
-          <div style="font-size:11px;color:var(--text2);margin-top:2px">keys · 8 devices</div>
+    </div>
+
+    <!-- FEATURES -->
+    <div id="features" class="section" style="background: var(--surf)">
+      <div class="section-inner">
+        <div class="section-tag">9 REAL OPTIMISATIONS</div>
+        <h2 class="section-title">
+          Everything IST-Sovereign <span>does to your PC</span>
+        </h2>
+        <p class="section-sub">
+          Every feature below is a genuine Windows API call — not a simulation.
+          Each one is measurable and verifiable via Task Manager.
+        </p>
+        <div class="feat-grid">
+          <div class="feat-card">
+            <div class="feat-icon">⚡</div>
+            <div class="feat-title">High Performance Power Plan</div>
+            <div class="feat-desc">
+              Activates Ultimate or High Performance mode. Stops CPU throttling.
+              Frequency boosted from 2500 → 2850 MHz instantly on test hardware.
+            </div>
+            <span class="feat-pill">Instant activation</span>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">🎯</div>
+            <div class="feat-title">CPU Core Affinity</div>
+            <div class="feat-desc">
+              Pins your target app exclusively to performance cores. Background
+              tasks moved to efficiency cores. No more competition for the same
+              silicon.
+            </div>
+            <span class="feat-pill">Per-application</span>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">🧹</div>
+            <div class="feat-title">Standby RAM Purge</div>
+            <div class="feat-desc">
+              Uses NtSetSystemInformation to flush the Windows standby memory
+              list — same method as RAMMap. Frees gigabytes Windows holds
+              unnecessarily.
+            </div>
+            <span class="feat-pill">5.88 GB freed on test</span>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">⏱</div>
+            <div class="feat-title">Timer Resolution 0.5ms</div>
+            <div class="feat-desc">
+              Uses NtSetTimerResolution for 0.5ms scheduling — a 31x improvement
+              from Windows default 15.6ms. Eliminates micro-stutters completely.
+            </div>
+            <span class="feat-pill">31x improvement</span>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">🔇</div>
+            <div class="feat-title">Background Noise Suppression</div>
+            <div class="feat-desc">
+              87 background processes — Search Indexer, Telemetry, OneDrive,
+              WMI, Windows Update — set to IDLE priority. They wait. You work.
+            </div>
+            <span class="feat-pill">87 processes silenced</span>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">🚀</div>
+            <div class="feat-title">Process Priority Elevation</div>
+            <div class="feat-desc">
+              Opens Win32 process handle and sets HIGH_PRIORITY_CLASS.
+              Re-elevated every 30 seconds — Windows cannot reset it back.
+            </div>
+            <span class="feat-pill">Re-elevated every 30s</span>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">💾</div>
+            <div class="feat-title">I/O Priority Boost</div>
+            <div class="feat-desc">
+              Raises disk I/O priority via NtSetInformationProcess. Faster file
+              reads for Revit, AutoCAD, dataset imports, and render cache.
+            </div>
+            <span class="feat-pill">Faster file access</span>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">🔋</div>
+            <div class="feat-title">CPU Minimum State 100%</div>
+            <div class="feat-desc">
+              Disables CPU low-power C-states via powercfg. Keeps the processor
+              at full frequency. No sudden slowdowns during computation.
+            </div>
+            <span class="feat-pill">Constant max frequency</span>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">🌐</div>
+            <div class="feat-title">Network TCP Optimisation</div>
+            <div class="feat-desc">
+              Enables TCP autotuninglevel and chimney offloading for lower
+              network latency — relevant for cloud apps, remote render farms,
+              and databases.
+            </div>
+            <span class="feat-pill">Lower network latency</span>
+          </div>
         </div>
-        <div class="price-feat">1024-channel Gold mode</div>
-        <div class="price-feat">All 9 optimisations</div>
-        <div class="price-feat">Full performance</div>
-        <div class="price-feat">WhatsApp support</div>
-        <button class="price-btn" onclick="buyPlan('BUSINESS',999)">Buy ₹999</button>
-      </div>
-    </div>
-    <div class="pay-methods">
-      <span class="pay-badge">UPI</span>
-      <span class="pay-badge">Google Pay</span>
-      <span class="pay-badge">PhonePe</span>
-      <span class="pay-badge">Paytm</span>
-      <span class="pay-badge">Net Banking</span>
-      <span class="pay-badge">PayPal</span>
-      <span class="pay-badge">Visa / Mastercard</span>
-    </div>
-    <div style="margin-top:28px;padding:20px;background:var(--surf);border:1px solid var(--border);border-radius:10px">
-      <div style="font-size:12px;font-weight:500;color:var(--text2);letter-spacing:1px;margin-bottom:8px">ENTERPRISE & GOVERNMENT</div>
-      <div style="font-size:14px;color:var(--text2);margin-bottom:12px">For offices with 20+ computers — volume pricing and dedicated support available.</div>
-      <a href="https://wa.me/917702249018?text=Enterprise pricing enquiry for IST-Sovereign"
-         target="_blank" class="btn btn-outline">Contact for Enterprise Pricing</a>
-    </div>
-  </div>
-</div>
-
-<footer>
-  © 2026 IST-Sovereign · Hyderabad, India ·
-  <a href="mailto:ist.sovereign.support@gmail.com">ist.sovereign.support@gmail.com</a> ·
-  <a href="https://wa.me/917702249018" target="_blank">WhatsApp</a> ·
-  <a onclick="openModal('signin')">Sign in</a>
-</footer>
-
-<!-- AUTH MODAL -->
-<div class="overlay" id="auth-modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-logo">IST-Sovereign</div>
-    <div class="modal-title" id="modal-title">Welcome back</div>
-    <div class="modal-sub" id="modal-sub">Sign in to access your dashboard and keys</div>
-    <div class="modal-tabs">
-      <div class="modal-tab active" id="tab-si" onclick="switchTab('signin')">SIGN IN</div>
-      <div class="modal-tab" id="tab-su" onclick="switchTab('signup')">FREE TRIAL</div>
-      <div class="modal-tab" id="tab-fp" onclick="switchTab('forgot')" style="font-size:11px">FORGOT?</div>
-    </div>
-
-    <!-- SIGN IN -->
-    <div id="view-signin">
-      <div class="form-err" id="si-err"></div>
-      <label class="form-lbl">EMAIL</label>
-      <input type="email" id="si-email" class="form-inp" placeholder="your@email.com"/>
-      <label class="form-lbl">PASSWORD</label>
-      <input type="password" id="si-pass" class="form-inp" placeholder="Password"
-        onkeydown="if(event.key==='Enter')doLogin()"/>
-      <button class="form-btn" onclick="doLogin()">Sign In</button>
-      <div class="modal-note">
-        No account? <a onclick="switchTab('signup')">Start free trial</a><br/>
-        Forgot password? <a onclick="switchTab('forgot')">Reset it</a>
       </div>
     </div>
 
-    <!-- SIGN UP -->
-    <div id="view-signup" style="display:none">
-      <div class="form-err" id="su-err"></div>
-      <label class="form-lbl">FULL NAME</label>
-      <input type="text" id="su-name" class="form-inp" placeholder="Your full name"/>
-      <label class="form-lbl">EMAIL ADDRESS</label>
-      <input type="email" id="su-email" class="form-inp" placeholder="your@email.com"/>
-      <label class="form-lbl">PASSWORD</label>
-      <input type="password" id="su-pass" class="form-inp" placeholder="Create password"/>
-      <button class="form-btn" onclick="doRegister()">Create Account & Get Trial Key</button>
-      <div class="modal-note">
-        7 days free · No credit card required<br/>
-        One trial per email address<br/>
-        Already have an account? <a onclick="switchTab('signin')">Sign in</a>
+    <!-- WHO IT HELPS -->
+    <div class="section">
+      <div class="section-inner">
+        <div class="section-tag">TARGET USERS</div>
+        <h2 class="section-title">
+          Built for <span>professionals</span> on standard hardware
+        </h2>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+          "
+        >
+          <div
+            style="
+              background: var(--card-bg);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 20px;
+            "
+          >
+            <div
+              style="
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--text);
+                margin-bottom: 6px;
+              "
+            >
+              🏗 CAD / Revit / AutoCAD
+            </div>
+            <div style="font-size: 13px; color: var(--text2)">
+              Faster model load times, smoother renders, fewer crashes. Ideal
+              for architects and civil engineers on laptops.
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--card-bg);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 20px;
+            "
+          >
+            <div
+              style="
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--text);
+                margin-bottom: 6px;
+              "
+            >
+              🤖 AI / ML / Data Science
+            </div>
+            <div style="font-size: 13px; color: var(--text2)">
+              Better GPU utilisation, faster training runs, higher pipeline
+              throughput for Python, TensorFlow, PyTorch.
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--card-bg);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 20px;
+            "
+          >
+            <div
+              style="
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--text);
+                margin-bottom: 6px;
+              "
+            >
+              🎨 3D Rendering / VFX
+            </div>
+            <div style="font-size: 13px; color: var(--text2)">
+              Reduced frame times, stable performance throughout long render
+              sessions in Blender, Maya, Cinema 4D.
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--card-bg);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 20px;
+            "
+          >
+            <div
+              style="
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--text);
+                margin-bottom: 6px;
+              "
+            >
+              💻 Software Development
+            </div>
+            <div style="font-size: 13px; color: var(--text2)">
+              Faster compile times, more responsive IDEs, quicker build
+              pipelines for VS Code, IntelliJ, and Xcode.
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--card-bg);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 20px;
+            "
+          >
+            <div
+              style="
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--text);
+                margin-bottom: 6px;
+              "
+            >
+              🏦 Banking / Fintech
+            </div>
+            <div style="font-size: 13px; color: var(--text2)">
+              Lower transaction processing latency, faster hash throughput,
+              reduced CPU overhead on financial workstations.
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--card-bg);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 20px;
+            "
+          >
+            <div
+              style="
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--text);
+                margin-bottom: 6px;
+              "
+            >
+              🏛 Government IT
+            </div>
+            <div style="font-size: 13px; color: var(--text2)">
+              Performance recovery for legacy hardware fleets. Run modern
+              software on older machines without hardware upgrades.
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- FORGOT PASSWORD -->
-    <div id="view-forgot" style="display:none">
-      <div class="form-err" id="fp-err"></div>
-      <div style="font-size:13px;color:var(--text2);margin-bottom:16px">
-        Enter your email and we will send you a password reset link.
+    <!-- DOWNLOAD SECTION -->
+    <div id="download" class="section" style="background: var(--surf)">
+      <div class="section-inner" style="text-align: center">
+        <div class="section-tag" style="text-align: center">DOWNLOAD</div>
+        <h2 class="section-title" style="text-align: center">
+          Get <span>IST-Sovereign</span> for Windows
+        </h2>
+        <div class="dl-box">
+          <div class="dl-icon">⬇</div>
+          <div class="dl-title">IST-Sovereign.exe</div>
+          <div class="dl-version">
+            Version 2.1.0 · Windows 10 / 11 · 64-bit · ~25 MB
+          </div>
+          <a
+            href="https://ist-sovereign-production.up.railway.app/IST-Sovereign.exe"
+            class="dl-btn"
+            download="IST-Sovereign.exe"
+          >
+            ⬇ &nbsp; Download for Windows
+          </a>
+          <div class="dl-req">
+            Windows 10 or 11 · 64-bit only<br />
+            Right-click → Run as Administrator for full results<br />
+            Internet connection for key activation
+          </div>
+        </div>
+        <div class="dl-steps">
+          <h3
+            style="
+              font-size: 16px;
+              font-weight: 500;
+              color: var(--text);
+              margin-bottom: 14px;
+            "
+          >
+            How to get started in 3 steps
+          </h3>
+          <div class="dl-step">
+            <div class="dl-step-n">1</div>
+            <div>
+              <div class="dl-step-title">Get your free trial key</div>
+              <div class="dl-step-desc">
+                Click "Free Trial" in the nav. Register with your email. Your
+                7-day IST-SIM key is sent to your email instantly. No credit
+                card needed.
+              </div>
+            </div>
+          </div>
+          <div class="dl-step">
+            <div class="dl-step-n">2</div>
+            <div>
+              <div class="dl-step-title">Download and run as Administrator</div>
+              <div class="dl-step-desc">
+                Download the .exe above. Right-click it → Run as Administrator.
+                No installation needed — it runs directly.
+              </div>
+            </div>
+          </div>
+          <div class="dl-step">
+            <div class="dl-step-n">3</div>
+            <div>
+              <div class="dl-step-title">Enter key and activate</div>
+              <div class="dl-step-desc">
+                Paste your IST-SIM key, type your target application (e.g.
+                Revit), select channels, and press ACTIVATE. See your results
+                live.
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <label class="form-lbl">EMAIL ADDRESS</label>
-      <input type="email" id="fp-email" class="form-inp" placeholder="your@email.com"/>
-      <button class="form-btn" onclick="doForgot()">Send Reset Link</button>
-      <div class="modal-note"><a onclick="switchTab('signin')">Back to sign in</a></div>
     </div>
-  </div>
-</div>
 
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
-// ── Theme ─────────────────────────────────────────────────────────────────────
-function toggleTheme(){
-  const html=document.documentElement;
-  const dark=html.getAttribute('data-theme')==='dark';
-  html.setAttribute('data-theme',dark?'light':'dark');
-  document.getElementById('theme-btn').textContent=dark?'🌙 Dark':'☀ Light';
-  localStorage.setItem('ist-theme',dark?'light':'dark');
-}
-(function(){
-  const s=localStorage.getItem('ist-theme')||'dark';
-  document.documentElement.setAttribute('data-theme',s);
-  document.getElementById('theme-btn').textContent=s==='dark'?'☀ Light':'🌙 Dark';
-})();
+    <!-- PRICING -->
+    <div id="pricing" class="section">
+      <div class="section-inner">
+        <div class="section-tag">PRICING</div>
+        <h2 class="section-title">Simple, honest <span>pricing</span></h2>
+        <p class="section-sub">
+          Start free for 7 days. No credit card required. All plans include
+          hardware-locked IST-SIM key, live dashboard, and all 9 optimisations.
+        </p>
+        <div
+          style="
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 12px 20px;
+            background: rgba(74, 158, 255, 0.1);
+            border: 1px solid rgba(74, 158, 255, 0.25);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--primary);
+          "
+        >
+          ★ All plans include 1024-channel Gold performance — maximum
+          optimisation on every device
+        </div>
+        <div
+          style="
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 12px 20px;
+            background: var(--surf);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--primary);
+          "
+        >
+          ★ All plans — 1024-channel Gold performance — maximum optimisation on
+          every device
+        </div>
+        <div class="price-grid">
+          <div class="price-card">
+            <div class="price-tier">FREE TRIAL</div>
+            <div
+              style="
+                display: inline-block;
+                background: rgba(255, 193, 7, 0.15);
+                border: 1px solid rgba(255, 193, 7, 0.4);
+                color: var(--gold);
+                font-size: 11px;
+                font-weight: 600;
+                padding: 2px 10px;
+                border-radius: 12px;
+                margin-bottom: 10px;
+              "
+            >
+              GOLD
+            </div>
+            <div class="price-inr">₹0</div>
+            <div class="price-usd">No payment required</div>
+            <div class="price-period">7 days free</div>
+            <div class="price-divider"></div>
+            <div
+              style="
+                background: var(--surf2);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 10px;
+                margin: 10px 0;
+                text-align: center;
+              "
+            >
+              <div
+                style="
+                  font-size: 28px;
+                  font-weight: 500;
+                  color: var(--primary);
+                  line-height: 1;
+                "
+              >
+                1
+              </div>
+              <div
+                style="font-size: 11px; color: var(--text2); margin-top: 2px"
+              >
+                key · 1 device
+              </div>
+            </div>
+            <div class="price-feat">1024-channel Gold mode</div>
+            <div class="price-feat">All 9 optimisations</div>
+            <div class="price-feat">Full performance</div>
+            <div class="price-feat">Email support</div>
+            <button class="price-btn" onclick="openModal('signup')">
+              Start Free Trial
+            </button>
+          </div>
+          <div class="price-card">
+            <div class="price-tier" style="color: #a0c4ff">STARTER</div>
+            <div
+              style="
+                display: inline-block;
+                background: rgba(255, 193, 7, 0.15);
+                border: 1px solid rgba(255, 193, 7, 0.4);
+                color: var(--gold);
+                font-size: 11px;
+                font-weight: 600;
+                padding: 2px 10px;
+                border-radius: 12px;
+                margin-bottom: 10px;
+              "
+            >
+              GOLD
+            </div>
+            <div class="price-inr">₹199</div>
+            <div class="price-usd">$3 USD</div>
+            <div class="price-period">per month</div>
+            <div class="price-divider"></div>
+            <div
+              style="
+                background: var(--surf2);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 10px;
+                margin: 10px 0;
+                text-align: center;
+              "
+            >
+              <div
+                style="
+                  font-size: 28px;
+                  font-weight: 500;
+                  color: var(--primary);
+                  line-height: 1;
+                "
+              >
+                1
+              </div>
+              <div
+                style="font-size: 11px; color: var(--text2); margin-top: 2px"
+              >
+                key · 1 device
+              </div>
+            </div>
+            <div class="price-feat">1024-channel Gold mode</div>
+            <div class="price-feat">All 9 optimisations</div>
+            <div class="price-feat">Full performance</div>
+            <div class="price-feat">Email support</div>
+            <button class="price-btn" onclick="buyPlan('STARTER', 199)">
+              Buy ₹199
+            </button>
+          </div>
+          <div class="price-card featured">
+            <div class="price-tier" style="color: var(--primary)">
+              PROFESSIONAL
+            </div>
+            <div
+              style="
+                display: inline-block;
+                background: rgba(255, 193, 7, 0.15);
+                border: 1px solid rgba(255, 193, 7, 0.4);
+                color: var(--gold);
+                font-size: 11px;
+                font-weight: 600;
+                padding: 2px 10px;
+                border-radius: 12px;
+                margin-bottom: 10px;
+              "
+            >
+              GOLD
+            </div>
+            <div class="price-inr">₹499</div>
+            <div class="price-usd">$7 USD</div>
+            <div class="price-period">per month</div>
+            <div class="price-divider"></div>
+            <div
+              style="
+                background: var(--surf2);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 10px;
+                margin: 10px 0;
+                text-align: center;
+              "
+            >
+              <div
+                style="
+                  font-size: 28px;
+                  font-weight: 500;
+                  color: var(--primary);
+                  line-height: 1;
+                "
+              >
+                3
+              </div>
+              <div
+                style="font-size: 11px; color: var(--text2); margin-top: 2px"
+              >
+                keys · 3 devices
+              </div>
+            </div>
+            <div class="price-feat">1024-channel Gold mode</div>
+            <div class="price-feat">All 9 optimisations</div>
+            <div class="price-feat">Full performance</div>
+            <div class="price-feat">Priority support</div>
+            <button class="price-btn" onclick="buyPlan('PROFESSIONAL', 499)">
+              Buy ₹499
+            </button>
+          </div>
+          <div class="price-card">
+            <div class="price-tier" style="color: var(--gold)">BUSINESS</div>
+            <div
+              style="
+                display: inline-block;
+                background: rgba(255, 193, 7, 0.15);
+                border: 1px solid rgba(255, 193, 7, 0.4);
+                color: var(--gold);
+                font-size: 11px;
+                font-weight: 600;
+                padding: 2px 10px;
+                border-radius: 12px;
+                margin-bottom: 10px;
+              "
+            >
+              GOLD
+            </div>
+            <div class="price-inr">₹999</div>
+            <div class="price-usd">$13 USD</div>
+            <div class="price-period">per month</div>
+            <div class="price-divider"></div>
+            <div
+              style="
+                background: var(--surf2);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 10px;
+                margin: 10px 0;
+                text-align: center;
+              "
+            >
+              <div
+                style="
+                  font-size: 28px;
+                  font-weight: 500;
+                  color: var(--primary);
+                  line-height: 1;
+                "
+              >
+                8
+              </div>
+              <div
+                style="font-size: 11px; color: var(--text2); margin-top: 2px"
+              >
+                keys · 8 devices
+              </div>
+            </div>
+            <div class="price-feat">1024-channel Gold mode</div>
+            <div class="price-feat">All 9 optimisations</div>
+            <div class="price-feat">Full performance</div>
+            <div class="price-feat">WhatsApp support</div>
+            <button class="price-btn" onclick="buyPlan('BUSINESS', 999)">
+              Buy ₹999
+            </button>
+          </div>
+        </div>
+        <div class="pay-methods">
+          <span class="pay-badge">UPI</span>
+          <span class="pay-badge">Google Pay</span>
+          <span class="pay-badge">PhonePe</span>
+          <span class="pay-badge">Paytm</span>
+          <span class="pay-badge">Net Banking</span>
+          <span class="pay-badge">PayPal</span>
+          <span class="pay-badge">Visa / Mastercard</span>
+        </div>
+        <div
+          style="
+            margin-top: 28px;
+            padding: 20px;
+            background: var(--surf);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+          "
+        >
+          <div
+            style="
+              font-size: 12px;
+              font-weight: 500;
+              color: var(--text2);
+              letter-spacing: 1px;
+              margin-bottom: 8px;
+            "
+          >
+            ENTERPRISE & GOVERNMENT
+          </div>
+          <div
+            style="font-size: 14px; color: var(--text2); margin-bottom: 12px"
+          >
+            For offices with 20+ computers — volume pricing and dedicated
+            support available.
+          </div>
+          <a
+            href="https://wa.me/917702249018?text=Enterprise pricing enquiry for IST-Sovereign"
+            target="_blank"
+            class="btn btn-outline"
+            >Contact for Enterprise Pricing</a
+          >
+        </div>
+      </div>
+    </div>
 
-// ── Modal ─────────────────────────────────────────────────────────────────────
-function openModal(tab){
-  document.getElementById('auth-modal').classList.add('open');
-  switchTab(tab||'signin');
-}
-function closeModal(){document.getElementById('auth-modal').classList.remove('open')}
-document.getElementById('auth-modal').addEventListener('click',function(e){
-  if(e.target===this)closeModal();
-});
-function switchTab(t){
-  ['signin','signup','forgot'].forEach(v=>{
-    document.getElementById('view-'+v).style.display=v===t?'block':'none';
-  });
-  ['si','su','fp'].forEach((id,i)=>{
-    const tabs=['signin','signup','forgot'];
-    document.getElementById('tab-'+id).classList.toggle('active',tabs[i]===t);
-  });
-  const titles={signin:['Welcome back','Sign in to your account'],
-                signup:['Start free trial','7 days free · No credit card needed'],
-                forgot:['Reset password','We will email you a reset link']};
-  const info=titles[t]||titles.signin;
-  document.getElementById('modal-title').textContent=info[0];
-  document.getElementById('modal-sub').textContent=info[1];
-}
+    <footer>
+      © 2026 IST-Sovereign · Hyderabad, India ·
+      <a href="mailto:ist.sovereign.support@gmail.com"
+        >ist.sovereign.support@gmail.com</a
+      >
+      · <a href="https://wa.me/917702249018" target="_blank">WhatsApp</a> ·
+      <a onclick="openModal('signin')">Sign in</a>
+    </footer>
 
-// ── Auth ──────────────────────────────────────────────────────────────────────
-async function doLogin(){
-  const email=document.getElementById('si-email').value.trim();
-  const pass=document.getElementById('si-pass').value;
-  if(!email||!pass){showErr('si-err','Please fill in all fields');return;}
-  try{
-    const r=await fetch('/api/user/login',{method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email,password:pass})});
-    const d=await r.json();
-    if(d.error){showErr('si-err',d.error);return;}
-    localStorage.setItem('ist_token',d.token);
-    localStorage.setItem('ist_user',JSON.stringify(d.user));
-    window.location.href='dashboard.html';
-  }catch(e){showErr('si-err','Connection error — is the server running?');}
-}
+    <!-- AUTH MODAL -->
+    <div class="overlay" id="auth-modal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-logo">IST-Sovereign</div>
+        <div class="modal-title" id="modal-title">Welcome back</div>
+        <div class="modal-sub" id="modal-sub">
+          Sign in to access your dashboard and keys
+        </div>
+        <div class="modal-tabs">
+          <div
+            class="modal-tab active"
+            id="tab-si"
+            onclick="switchTab('signin')"
+          >
+            SIGN IN
+          </div>
+          <div class="modal-tab" id="tab-su" onclick="switchTab('signup')">
+            FREE TRIAL
+          </div>
+          <div
+            class="modal-tab"
+            id="tab-fp"
+            onclick="switchTab('forgot')"
+            style="font-size: 11px"
+          >
+            FORGOT?
+          </div>
+        </div>
 
-async function doRegister(){
-  const name=document.getElementById('su-name').value.trim();
-  const email=document.getElementById('su-email').value.trim();
-  const pass=document.getElementById('su-pass').value;
-  if(!name||!email||!pass){showErr('su-err','Please fill in all fields');return;}
-  if(pass.length<6){showErr('su-err','Password must be at least 6 characters');return;}
-  try{
-    const r=await fetch('/api/user/register',{method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name,email,password:pass})});
-    const d=await r.json();
-    if(d.error){showErr('su-err',d.error);return;}
-    alert(`Account created! Please sign in to generate your free trial key.\n\nYour key will be emailed to: ${email}`);
-    switchTab('signin');
-    document.getElementById('si-email').value=email;
-  }catch(e){showErr('su-err','Connection error — is the server running?');}
-}
+        <!-- SIGN IN -->
+        <div id="view-signin">
+          <div class="form-err" id="si-err"></div>
+          <label class="form-lbl">EMAIL</label>
+          <input
+            type="email"
+            id="si-email"
+            class="form-inp"
+            placeholder="your@email.com"
+          />
+          <label class="form-lbl">PASSWORD</label>
+          <input
+            type="password"
+            id="si-pass"
+            class="form-inp"
+            placeholder="Password"
+            onkeydown="if (event.key === 'Enter') doLogin();"
+          />
+          <button class="form-btn" onclick="doLogin()">Sign In</button>
+          <div class="modal-note">
+            No account? <a onclick="switchTab('signup')">Start free trial</a
+            ><br />
+            Forgot password? <a onclick="switchTab('forgot')">Reset it</a>
+          </div>
+        </div>
 
-async function doForgot(){
-  const email=document.getElementById('fp-email').value.trim();
-  if(!email){showErr('fp-err','Please enter your email');return;}
-  try{
-    const r=await fetch('/api/user/forgot-password',{method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email})});
-    const d=await r.json();
-    alert(`If an account exists for ${email}, a reset link has been sent.\n\nCheck your inbox.`);
-    switchTab('signin');
-  }catch(e){
-    alert(`Please email us directly at ist.sovereign.support@gmail.com\nand we will reset your password manually.`);
-  }
-}
+        <!-- SIGN UP -->
+        <div id="view-signup" style="display: none">
+          <div class="form-err" id="su-err"></div>
+          <label class="form-lbl">FULL NAME</label>
+          <input
+            type="text"
+            id="su-name"
+            class="form-inp"
+            placeholder="Your full name"
+          />
+          <label class="form-lbl">EMAIL ADDRESS</label>
+          <input
+            type="email"
+            id="su-email"
+            class="form-inp"
+            placeholder="your@email.com"
+          />
+          <label class="form-lbl">PASSWORD</label>
+          <input
+            type="password"
+            id="su-pass"
+            class="form-inp"
+            placeholder="Create password"
+          />
+          <button class="form-btn" onclick="doRegister()">
+            Create Account & Get Trial Key
+          </button>
+          <div class="modal-note">
+            7 days free · No credit card required<br />
+            One trial per email address<br />
+            Already have an account?
+            <a onclick="switchTab('signin')">Sign in</a>
+          </div>
+        </div>
 
-function showErr(id,msg){
-  const el=document.getElementById(id);
-  el.textContent=msg;el.style.display='block';
-  setTimeout(()=>el.style.display='none',4000);
-}
+        <!-- FORGOT PASSWORD -->
+        <div id="view-forgot" style="display: none">
+          <div class="form-err" id="fp-err"></div>
+          <div
+            style="font-size: 13px; color: var(--text2); margin-bottom: 16px"
+          >
+            Enter your email and we will send you a password reset link.
+          </div>
+          <label class="form-lbl">EMAIL ADDRESS</label>
+          <input
+            type="email"
+            id="fp-email"
+            class="form-inp"
+            placeholder="your@email.com"
+          />
+          <button class="form-btn" onclick="doForgot()">Send Reset Link</button>
+          <div class="modal-note">
+            <a onclick="switchTab('signin')">Back to sign in</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-// ── Razorpay payment ──────────────────────────────────────────────────────────
-async function buyPlan(tier,amountINR){
-  const token=localStorage.getItem('ist_token');
-  if(!token){
-    alert('Please sign in first.');openModal('signin');return;
-  }
-  try{
-    const r=await fetch('/api/payment/create-order',{method:'POST',
-      headers:{'Content-Type':'application/json',
-               'Authorization':'Bearer '+token},
-      body:JSON.stringify({tier})});
-    const d=await r.json();
-    if(d.error){
-      alert('To purchase '+tier+', please contact us:\n\nWhatsApp: +91 77022 49018\nEmail: ist.sovereign.support@gmail.com');
-      return;
-    }
-    const options={
-      key:'rzp_test_Se9gXNic02I9UW',
-      amount:d.amount,currency:'INR',
-      name:'IST-Sovereign',
-      description:tier+' Plan — Windows Performance Agent',
-      order_id:d.orderId,
-      handler:async function(resp){
-        const vr=await fetch('/api/payment/verify',{method:'POST',
-          headers:{'Content-Type':'application/json',
-                   'Authorization':'Bearer '+token},
-          body:JSON.stringify({...resp,tier})});
-        const vd=await vr.json();
-        if(vd.success){
-          const kList = vd.keys && vd.keys.length > 1
-            ? vd.keys.map((k,i)=>'Key '+(i+1)+': '+k.keyCode).join('\n')
-            : 'Key: '+vd.key.keyCode;
-          alert('Payment successful!\n\n'+kList+'\n\nAll keys emailed to you. Each key activates on one device.');
-          window.location.href='dashboard.html';
-        }else{alert('Verification failed. Contact support.');}
-      },
-      theme:{color:'#1a73e8'}
-    };
-    new Razorpay(options).open();
-  }catch(e){
-    alert('Payment unavailable. Contact ist.sovereign.support@gmail.com');
-  }
-}
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+      const API_BASE = "";
+      const _fetch = (url, opts) => fetch(API_BASE + url, opts);
 
-// Auto-redirect if already logged in
-if(localStorage.getItem('ist_token')&&window.location.pathname.includes('index')){
-  // Don't auto redirect — let them browse
-}
-</script>
-</body>
+      // ── Theme ─────────────────────────────────────────────────────────────────────
+      function toggleTheme() {
+        const html = document.documentElement;
+        const dark = html.getAttribute("data-theme") === "dark";
+        html.setAttribute("data-theme", dark ? "light" : "dark");
+        document.getElementById("theme-btn").textContent = dark
+          ? "🌙 Dark"
+          : "☀ Light";
+        localStorage.setItem("ist-theme", dark ? "light" : "dark");
+      }
+      (function () {
+        const s = localStorage.getItem("ist-theme") || "dark";
+        document.documentElement.setAttribute("data-theme", s);
+        document.getElementById("theme-btn").textContent =
+          s === "dark" ? "☀ Light" : "🌙 Dark";
+      })();
+
+      // ── Modal ─────────────────────────────────────────────────────────────────────
+      function openModal(tab) {
+        document.getElementById("auth-modal").classList.add("open");
+        switchTab(tab || "signin");
+      }
+      function closeModal() {
+        document.getElementById("auth-modal").classList.remove("open");
+      }
+      document
+        .getElementById("auth-modal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeModal();
+        });
+      function switchTab(t) {
+        ["signin", "signup", "forgot"].forEach((v) => {
+          document.getElementById("view-" + v).style.display =
+            v === t ? "block" : "none";
+        });
+        ["si", "su", "fp"].forEach((id, i) => {
+          const tabs = ["signin", "signup", "forgot"];
+          document
+            .getElementById("tab-" + id)
+            .classList.toggle("active", tabs[i] === t);
+        });
+        const titles = {
+          signin: ["Welcome back", "Sign in to your account"],
+          signup: ["Start free trial", "7 days free · No credit card needed"],
+          forgot: ["Reset password", "We will email you a reset link"],
+        };
+        const info = titles[t] || titles.signin;
+        document.getElementById("modal-title").textContent = info[0];
+        document.getElementById("modal-sub").textContent = info[1];
+      }
+
+      // ── Auth ──────────────────────────────────────────────────────────────────────
+      async function doLogin() {
+        const email = document.getElementById("si-email").value.trim();
+        const pass = document.getElementById("si-pass").value;
+        if (!email || !pass) {
+          showErr("si-err", "Please fill in all fields");
+          return;
+        }
+        try {
+          const r = await _fetch("/api/user/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password: pass }),
+          });
+          const d = await r.json();
+          if (d.error) {
+            showErr("si-err", d.error);
+            return;
+          }
+          localStorage.setItem("ist_token", d.token);
+          localStorage.setItem("ist_user", JSON.stringify(d.user));
+          window.location.href = "dashboard.html";
+        } catch (e) {
+          showErr("si-err", "Connection error — is the server running?");
+        }
+      }
+
+      async function doRegister() {
+        const name = document.getElementById("su-name").value.trim();
+        const email = document.getElementById("su-email").value.trim();
+        const pass = document.getElementById("su-pass").value;
+        if (!name || !email || !pass) {
+          showErr("su-err", "Please fill in all fields");
+          return;
+        }
+        if (pass.length < 6) {
+          showErr("su-err", "Password must be at least 6 characters");
+          return;
+        }
+        try {
+          const r = await _fetch("/api/user/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, password: pass }),
+          });
+          const d = await r.json();
+          if (d.error) {
+            showErr("su-err", d.error);
+            return;
+          }
+          alert(
+            `Account created! Please sign in to generate your free trial key.\n\nYour key will be emailed to: ${email}`,
+          );
+          switchTab("signin");
+          document.getElementById("si-email").value = email;
+        } catch (e) {
+          showErr("su-err", "Connection error — is the server running?");
+        }
+      }
+
+      async function doForgot() {
+        const email = document.getElementById("fp-email").value.trim();
+        if (!email) {
+          showErr("fp-err", "Please enter your email");
+          return;
+        }
+        try {
+          const r = await _fetch("/api/user/forgot-password", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+          });
+          const d = await r.json();
+          alert(
+            `If an account exists for ${email}, a reset link has been sent.\n\nCheck your inbox.`,
+          );
+          switchTab("signin");
+        } catch (e) {
+          alert(
+            `Please email us directly at ist.sovereign.support@gmail.com\nand we will reset your password manually.`,
+          );
+        }
+      }
+
+      function showErr(id, msg) {
+        const el = document.getElementById(id);
+        el.textContent = msg;
+        el.style.display = "block";
+        setTimeout(() => (el.style.display = "none"), 4000);
+      }
+
+      // ── Razorpay payment ──────────────────────────────────────────────────────────
+      async function buyPlan(tier, amountINR) {
+        const token = localStorage.getItem("ist_token");
+        if (!token) {
+          alert("Please sign in first.");
+          openModal("signin");
+          return;
+        }
+        try {
+          const r = await _fetch("/api/payment/create-order", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify({ tier }),
+          });
+          const d = await r.json();
+          if (d.error) {
+            alert(
+              "To purchase " +
+                tier +
+                ", please contact us:\n\nWhatsApp: +91 77022 49018\nEmail: ist.sovereign.support@gmail.com",
+            );
+            return;
+          }
+          const options = {
+            key: "rzp_test_Se9gXNic02I9UW",
+            amount: d.amount,
+            currency: "INR",
+            name: "IST-Sovereign",
+            description: tier + " Plan — Windows Performance Agent",
+            order_id: d.orderId,
+            handler: async function (resp) {
+              const vr = await _fetch("/api/payment/verify", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "Bearer " + token,
+                },
+                body: JSON.stringify({ ...resp, tier }),
+              });
+              const vd = await vr.json();
+              if (vd.success) {
+                const kList =
+                  vd.keys && vd.keys.length > 1
+                    ? vd.keys
+                        .map((k, i) => "Key " + (i + 1) + ": " + k.keyCode)
+                        .join("\n")
+                    : "Key: " + vd.key.keyCode;
+                alert(
+                  "Payment successful!\n\n" +
+                    kList +
+                    "\n\nAll keys emailed to you. Each key activates on one device.",
+                );
+                window.location.href = "dashboard.html";
+              } else {
+                alert("Verification failed. Contact support.");
+              }
+            },
+            theme: { color: "#1a73e8" },
+          };
+          new Razorpay(options).open();
+        } catch (e) {
+          alert("Payment unavailable. Contact ist.sovereign.support@gmail.com");
+        }
+      }
+
+      // Auto-redirect if already logged in
+      if (
+        localStorage.getItem("ist_token") &&
+        window.location.pathname.includes("index")
+      ) {
+        // Don't auto redirect — let them browse
+      }
+    </script>
+  </body>
 </html>
