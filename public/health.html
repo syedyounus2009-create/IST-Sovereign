@@ -1,16 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head><title>IST-Sovereign Health Check</title>
-<style>body{font-family:monospace;padding:20px;background:#0d1b2a;color:#00f5ff}</style>
-</head>
-<body>
-<h2>IST-Sovereign Server Health</h2>
-<pre id="out">Loading...</pre>
-<script>
-fetch('/api/health')
-  .then(r=>r.json())
-  .then(d=>{ document.getElementById('out').textContent = JSON.stringify(d,null,2); })
-  .catch(e=>{ document.getElementById('out').textContent = 'ERROR: '+e.message; });
-</script>
-</body>
+  <head>
+    <title>IST-Sovereign Health Check</title>
+    <style>
+      body {
+        font-family: monospace;
+        padding: 20px;
+        background: #0d1b2a;
+        color: #00f5ff;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>IST-Sovereign Server Health</h2>
+    <pre id="out">Loading...</pre>
+    <script>
+      fetch("/api/health")
+        .then((r) => r.json())
+        .then((d) => {
+          document.getElementById("out").textContent = JSON.stringify(
+            d,
+            null,
+            2,
+          );
+        })
+        .catch((e) => {
+          document.getElementById("out").textContent = "ERROR: " + e.message;
+        });
+    </script>
+  </body>
 </html>
