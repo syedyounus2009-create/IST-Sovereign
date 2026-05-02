@@ -1,569 +1,274 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IST-Sovereign | My Dashboard</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      :root {
-        --primary: #1a73e8;
-        --primary-h: #174ea6;
-        --text: #202124;
-        --text2: #5f6368;
-        --bg: #f8f9fa;
-        --white: #ffffff;
-        --border: #dadce0;
-        --green: #137333;
-        --green-bg: #e6f4ea;
-        --red: #c5221f;
-        --red-bg: #fce8e6;
-        --gold: #b06000;
-        --gold-bg: #fef7e0;
-        --violet: #6200ea;
-        --violet-bg: #f3e8fd;
-        --radius: 8px;
-      }
-      body {
-        font-family: "Roboto", sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        -webkit-font-smoothing: antialiased;
-      }
-      a {
-        color: var(--primary);
-        text-decoration: none;
-      }
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IST-Sovereign | My Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#1a73e8;--primary-h:#174ea6;
+  --text:#202124;--text2:#5f6368;
+  --bg:#f8f9fa;--white:#ffffff;--border:#dadce0;
+  --green:#137333;--green-bg:#e6f4ea;
+  --red:#c5221f;--red-bg:#fce8e6;
+  --gold:#b06000;--gold-bg:#fef7e0;
+  --violet:#6200ea;--violet-bg:#f3e8fd;
+  --radius:8px;
+}
+body{font-family:'Roboto',sans-serif;background:var(--bg);
+  color:var(--text);-webkit-font-smoothing:antialiased}
+a{color:var(--primary);text-decoration:none}
 
-      nav {
-        background: var(--white);
-        border-bottom: 1px solid var(--border);
-        padding: 0 28px;
-        height: 56px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-      }
-      .nav-left {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-      }
-      .back-btn {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        color: var(--text2);
-        font-size: 14px;
-        cursor: pointer;
-        padding: 6px 12px;
-        border-radius: 6px;
-        border: 1px solid var(--border);
-        background: transparent;
-        font-family: inherit;
-        transition: all 0.2s;
-      }
-      .back-btn:hover {
-        background: var(--bg);
-        color: var(--text);
-      }
-      .logo {
-        font-size: 17px;
-        font-weight: 500;
-        color: var(--text);
-      }
-      .logo span {
-        color: var(--primary);
-      }
-      .user-info {
-        font-size: 13px;
-        color: var(--text2);
-      }
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 7px 16px;
-        font-size: 13px;
-        font-weight: 500;
-        border-radius: 6px;
-        cursor: pointer;
-        border: 1px solid transparent;
-        transition: all 0.2s;
-        font-family: inherit;
-      }
-      .btn-primary {
-        background: var(--primary);
-        color: white;
-      }
-      .btn-primary:hover {
-        background: var(--primary-h);
-      }
-      .btn-outline {
-        background: transparent;
-        color: var(--primary);
-        border-color: var(--border);
-      }
-      .btn-outline:hover {
-        background: var(--bg);
-      }
-      .btn-danger {
-        background: var(--red-bg);
-        color: var(--red);
-        border-color: transparent;
-      }
-      .btn-green {
-        background: var(--green-bg);
-        color: var(--green);
-        border-color: transparent;
-      }
-      .btn-download {
-        background: var(--primary);
-        color: white;
-        font-size: 15px;
-        font-weight: 500;
-        padding: 12px 28px;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-        font-family: inherit;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        text-decoration: none;
-        transition: all 0.2s;
-      }
-      .btn-download:hover {
-        background: var(--primary-h);
-        transform: translateY(-1px);
-      }
+nav{background:var(--white);border-bottom:1px solid var(--border);
+  padding:0 28px;height:56px;display:flex;align-items:center;
+  justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-left{display:flex;align-items:center;gap:16px}
+.back-btn{display:flex;align-items:center;gap:6px;
+  color:var(--text2);font-size:14px;cursor:pointer;
+  padding:6px 12px;border-radius:6px;border:1px solid var(--border);
+  background:transparent;font-family:inherit;transition:all 0.2s}
+.back-btn:hover{background:var(--bg);color:var(--text)}
+.logo{font-size:17px;font-weight:500;color:var(--text)}
+.logo span{color:var(--primary)}
+.user-info{font-size:13px;color:var(--text2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;
+  padding:7px 16px;font-size:13px;font-weight:500;border-radius:6px;
+  cursor:pointer;border:1px solid transparent;transition:all 0.2s;font-family:inherit}
+.btn-primary{background:var(--primary);color:white}
+.btn-primary:hover{background:var(--primary-h)}
+.btn-outline{background:transparent;color:var(--primary);border-color:var(--border)}
+.btn-outline:hover{background:var(--bg)}
+.btn-danger{background:var(--red-bg);color:var(--red);border-color:transparent}
+.btn-green{background:var(--green-bg);color:var(--green);border-color:transparent}
+.btn-download{background:var(--primary);color:white;
+  font-size:15px;font-weight:500;padding:12px 28px;
+  border-radius:8px;border:none;cursor:pointer;
+  font-family:inherit;display:flex;align-items:center;gap:8px;
+  text-decoration:none;transition:all 0.2s}
+.btn-download:hover{background:var(--primary-h);transform:translateY(-1px)}
 
-      .wrap {
-        max-width: 960px;
-        margin: 28px auto;
-        padding: 0 24px;
-      }
-      .grid {
-        display: grid;
-        grid-template-columns: 1fr 300px;
-        gap: 20px;
-      }
-      .card {
-        background: var(--white);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 22px;
-        margin-bottom: 18px;
-      }
-      .card-title {
-        font-size: 17px;
-        font-weight: 500;
-        margin-bottom: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .key-box {
-        background: var(--bg);
-        border: 2px dashed var(--border);
-        border-radius: 6px;
-        padding: 16px;
-        text-align: center;
-        margin-bottom: 14px;
-      }
-      .key-code {
-        font-family: monospace;
-        font-size: 19px;
-        letter-spacing: 2px;
-        color: var(--primary);
-        font-weight: 700;
-        margin-bottom: 6px;
-      }
-      .key-tier {
-        font-size: 11px;
-        color: var(--text2);
-        margin-bottom: 4px;
-        font-weight: 500;
-        letter-spacing: 1px;
-      }
-      .key-expiry {
-        font-size: 12px;
-        color: var(--text2);
-      }
-      .badge {
-        display: inline-block;
-        padding: 2px 9px;
-        border-radius: 12px;
-        font-size: 11px;
-        font-weight: 500;
-      }
-      .badge-active {
-        background: var(--green-bg);
-        color: var(--green);
-      }
-      .badge-pending {
-        background: var(--gold-bg);
-        color: var(--gold);
-      }
-      .badge-expired {
-        background: var(--bg);
-        color: var(--text2);
-        border: 1px solid var(--border);
-      }
-      .badge-killed {
-        background: var(--red-bg);
-        color: var(--red);
-      }
-      .pkg-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px 0;
-        border-bottom: 1px solid var(--border);
-      }
-      .pkg-row:last-child {
-        border-bottom: none;
-      }
-      .pkg-name {
-        font-size: 14px;
-        font-weight: 500;
-      }
-      .pkg-desc {
-        font-size: 12px;
-        color: var(--text2);
-        margin-top: 2px;
-      }
-      .alert-box {
-        background: var(--gold-bg);
-        border: 1px solid #f0c000;
-        border-radius: 6px;
-        padding: 12px 14px;
-        font-size: 13px;
-        color: var(--gold);
-        margin-bottom: 14px;
-        display: none;
-      }
-      .copy-btn {
-        font-size: 11px;
-        padding: 4px 10px;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        cursor: pointer;
-        color: var(--primary);
-        font-family: inherit;
-        transition: all 0.2s;
-      }
-      .copy-btn:hover {
-        background: var(--primary);
-        color: white;
-      }
-      .steps-list {
-        font-size: 13px;
-        color: var(--text2);
-        line-height: 2.2;
-        margin-top: 8px;
-      }
-      .steps-list li {
-        display: flex;
-        gap: 8px;
-        align-items: flex-start;
-        padding: 4px 0;
-      }
-      .step-n {
-        background: var(--primary);
-        color: white;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 11px;
-        font-weight: 700;
-        flex-shrink: 0;
-        margin-top: 1px;
-      }
-    </style>
-  </head>
-  <body>
-    <nav>
-      <div class="nav-left">
-        <button class="back-btn" onclick="goHome()">← Home</button>
-        <div class="logo">IST-<span>Sovereign</span></div>
-      </div>
-      <div style="display: flex; align-items: center; gap: 14px">
-        <span class="user-info" id="user-name">Loading...</span>
-        <button class="btn btn-outline" onclick="doLogout()">Sign out</button>
-      </div>
-    </nav>
+.wrap{max-width:960px;margin:28px auto;padding:0 24px}
+.grid{display:grid;grid-template-columns:1fr 300px;gap:20px}
+.card{background:var(--white);border:1px solid var(--border);
+  border-radius:var(--radius);padding:22px;margin-bottom:18px}
+.card-title{font-size:17px;font-weight:500;margin-bottom:16px;
+  display:flex;align-items:center;justify-content:space-between}
+.key-box{background:var(--bg);border:2px dashed var(--border);
+  border-radius:6px;padding:16px;text-align:center;margin-bottom:14px}
+.key-code{font-family:monospace;font-size:19px;letter-spacing:2px;
+  color:var(--primary);font-weight:700;margin-bottom:6px}
+.key-tier{font-size:11px;color:var(--text2);margin-bottom:4px;font-weight:500;letter-spacing:1px}
+.key-expiry{font-size:12px;color:var(--text2)}
+.badge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:500}
+.badge-active{background:var(--green-bg);color:var(--green)}
+.badge-pending{background:var(--gold-bg);color:var(--gold)}
+.badge-expired{background:var(--bg);color:var(--text2);border:1px solid var(--border)}
+.badge-killed{background:var(--red-bg);color:var(--red)}
+.pkg-row{display:flex;justify-content:space-between;align-items:center;
+  padding:12px 0;border-bottom:1px solid var(--border)}
+.pkg-row:last-child{border-bottom:none}
+.pkg-name{font-size:14px;font-weight:500}
+.pkg-desc{font-size:12px;color:var(--text2);margin-top:2px}
+.alert-box{background:var(--gold-bg);border:1px solid #f0c000;
+  border-radius:6px;padding:12px 14px;font-size:13px;
+  color:var(--gold);margin-bottom:14px;display:none}
+.copy-btn{font-size:11px;padding:4px 10px;background:var(--bg);
+  border:1px solid var(--border);border-radius:4px;cursor:pointer;
+  color:var(--primary);font-family:inherit;transition:all 0.2s}
+.copy-btn:hover{background:var(--primary);color:white}
+.steps-list{font-size:13px;color:var(--text2);line-height:2.2;margin-top:8px}
+.steps-list li{display:flex;gap:8px;align-items:flex-start;padding:4px 0}
+.step-n{background:var(--primary);color:white;border-radius:50%;
+  width:20px;height:20px;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+</style>
+</head>
+<body>
 
-    <div class="wrap">
-      <div class="grid">
-        <!-- LEFT COLUMN -->
-        <div>
-          <!-- ALERT -->
-          <div class="alert-box" id="alert-box"></div>
+<nav>
+  <div class="nav-left">
+    <button class="back-btn" onclick="goHome()">← Home</button>
+    <div class="logo">IST-<span>Sovereign</span></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <span class="user-info" id="user-name">Loading...</span>
+    <button class="btn btn-outline" onclick="doLogout()">Sign out</button>
+  </div>
+</nav>
 
-          <!-- ACTIVE KEYS -->
-          <div class="card">
-            <div class="card-title">
-              Your Active Keys
-              <button
-                class="btn btn-primary"
-                id="trial-btn"
-                onclick="generateTrial()"
-                style="display: none"
-              >
-                Generate 7-Day Trial Key
-              </button>
-            </div>
-            <div id="keys-container">
-              <div
-                style="
-                  text-align: center;
-                  padding: 20px;
-                  color: var(--text2);
-                  font-size: 14px;
-                "
-              >
-                Loading your keys...
-              </div>
-            </div>
-          </div>
+<div class="wrap">
+  <div class="grid">
 
-          <!-- UPGRADE -->
-          <div class="card">
-            <div class="card-title">Upgrade Plan</div>
-            <div
-              style="
-                font-size: 12px;
-                color: var(--primary);
-                background: #e8f0fe;
-                padding: 8px 12px;
-                border-radius: 6px;
-                margin-bottom: 14px;
-              "
-            >
-              ★ All plans — 1024-channel Gold performance on every device
-            </div>
-            <div class="pkg-row">
-              <div>
-                <div class="pkg-name">Starter</div>
-                <div class="pkg-desc">
-                  1 device · 1 key · 1024-ch Gold · ₹199/month
-                </div>
-              </div>
-              <button class="btn btn-outline" onclick="buyPlan('STARTER', 199)">
-                Buy ₹199
-              </button>
-            </div>
-            <div class="pkg-row">
-              <div>
-                <div class="pkg-name">Professional ⭐</div>
-                <div class="pkg-desc">
-                  3 devices · 3 keys · 1024-ch Gold · ₹499/month
-                </div>
-              </div>
-              <button
-                class="btn btn-primary"
-                onclick="buyPlan('PROFESSIONAL', 499)"
-              >
-                Buy ₹499
-              </button>
-            </div>
-            <div class="pkg-row">
-              <div>
-                <div class="pkg-name">Business</div>
-                <div class="pkg-desc">
-                  8 devices · 8 keys · 1024-ch Gold · ₹999/month
-                </div>
-              </div>
-              <button
-                class="btn btn-outline"
-                style="color: var(--gold); border-color: var(--gold)"
-                onclick="buyPlan('BUSINESS', 999)"
-              >
-                Buy ₹999
-              </button>
-            </div>
-            <div style="margin-top: 12px; font-size: 12px; color: var(--text2)">
-              Pay via UPI · Google Pay · PhonePe · Paytm · PayPal
-            </div>
-          </div>
+    <!-- LEFT COLUMN -->
+    <div>
+
+      <!-- ALERT -->
+      <div class="alert-box" id="alert-box"></div>
+
+      <!-- ACTIVE KEYS -->
+      <div class="card">
+        <div class="card-title">
+          Your Active Keys
+          <button class="btn btn-primary" id="trial-btn"
+            onclick="generateTrial()" style="display:none">
+            Generate 7-Day Trial Key
+          </button>
         </div>
-
-        <!-- RIGHT SIDEBAR -->
-        <div>
-          <!-- DOWNLOAD -->
-          <div class="card" style="text-align: center">
-            <div style="font-size: 32px; margin-bottom: 8px">⬇</div>
-            <div style="font-size: 16px; font-weight: 500; margin-bottom: 4px">
-              Windows Agent
-            </div>
-            <div
-              style="font-size: 12px; color: var(--text2); margin-bottom: 18px"
-            >
-              v2.1.0 · Windows 10/11 · 64-bit<br />
-              Run as Administrator for best results
-            </div>
-            <a
-              href="/IST-Sovereign.exe"
-              class="btn-download"
-              download="IST-Sovereign.exe"
-            >
-              ⬇ Download .exe
-            </a>
-            <div style="margin-top: 12px; font-size: 11px; color: var(--text2)">
-              Right-click → Run as Administrator
-            </div>
-          </div>
-
-          <!-- HOW TO USE -->
-          <div class="card">
-            <div style="font-size: 15px; font-weight: 500; margin-bottom: 12px">
-              How to use
-            </div>
-            <ol class="steps-list" style="list-style: none; padding: 0">
-              <li><span class="step-n">1</span>Download the .exe above</li>
-              <li>
-                <span class="step-n">2</span>Right-click → Run as Administrator
-              </li>
-              <li><span class="step-n">3</span>Enter your IST-SIM key</li>
-              <li>
-                <span class="step-n">4</span>Type your target app (e.g. Revit)
-              </li>
-              <li>
-                <span class="step-n">5</span>Press ACTIVATE and see results
-              </li>
-            </ol>
-          </div>
-
-          <!-- SUPPORT -->
-          <div class="card">
-            <div style="font-size: 15px; font-weight: 500; margin-bottom: 12px">
-              Support
-            </div>
-            <div style="font-size: 13px; color: var(--text2); line-height: 2">
-              <div>📧 ist.sovereign.support@gmail.com</div>
-              <div>
-                💬
-                <a href="https://wa.me/917702249018" target="_blank"
-                  >WhatsApp Business</a
-                >
-              </div>
-              <div>
-                🌐
-                <a href="/" onclick="goHome()"
-                  >ist-sovereign-production.up.railway.app</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <!-- FEEDBACK -->
-          <div class="card" style="margin-top: 20px;">
-            <div style="font-size: 15px; font-weight: 500; margin-bottom: 12px">
-              Send Feedback / Comments
-            </div>
-            <textarea id="feedback-text" rows="3" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 13px; margin-bottom: 10px; resize: vertical; outline: none" placeholder="Help us improve IST-Sovereign..."></textarea>
-            <button class="btn btn-primary" style="width: 100%" onclick="sendFeedback()">Send to Admin</button>
+        <div id="keys-container">
+          <div style="text-align:center;padding:20px;color:var(--text2);font-size:14px">
+            Loading your keys...
           </div>
         </div>
       </div>
+
+      <!-- UPGRADE -->
+      <div class="card">
+        <div class="card-title">Upgrade Plan</div>
+        <div style="font-size:12px;color:var(--primary);background:#e8f0fe;
+          padding:8px 12px;border-radius:6px;margin-bottom:14px">
+          ★ All plans — 1024-channel Gold performance on every device
+        </div>
+        <div class="pkg-row">
+          <div>
+            <div class="pkg-name">Starter</div>
+            <div class="pkg-desc">1 device · 1 key · 1024-ch Gold · ₹199/month</div>
+          </div>
+          <button class="btn btn-outline" onclick="buyPlan('STARTER',199)">Buy ₹199</button>
+        </div>
+        <div class="pkg-row">
+          <div>
+            <div class="pkg-name">Professional ⭐</div>
+            <div class="pkg-desc">3 devices · 3 keys · 1024-ch Gold · ₹499/month</div>
+          </div>
+          <button class="btn btn-primary" onclick="buyPlan('PROFESSIONAL',499)">Buy ₹499</button>
+        </div>
+        <div class="pkg-row">
+          <div>
+            <div class="pkg-name">Business</div>
+            <div class="pkg-desc">8 devices · 8 keys · 1024-ch Gold · ₹999/month</div>
+          </div>
+          <button class="btn btn-outline" style="color:var(--gold);border-color:var(--gold)"
+            onclick="buyPlan('BUSINESS',999)">Buy ₹999</button>
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:var(--text2)">
+          Pay via UPI · Google Pay · PhonePe · Paytm · PayPal
+        </div>
+      </div>
+
     </div>
 
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <script>
-      const API_BASE = "";
-      const _fetch = (url, opts) => fetch(API_BASE + url, opts);
+    <!-- RIGHT SIDEBAR -->
+    <div>
 
-      const token = localStorage.getItem("ist_token");
-      const user = JSON.parse(localStorage.getItem("ist_user") || "{}");
+      <!-- DOWNLOAD -->
+      <div class="card" style="text-align:center">
+        <div style="font-size:32px;margin-bottom:8px">⬇</div>
+        <div style="font-size:16px;font-weight:500;margin-bottom:4px">Windows Agent</div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:18px">
+          v2.1.0 · Windows 10/11 · 64-bit<br/>
+          Run as Administrator for best results
+        </div>
+        <a href="https://ist-sovereign-production.up.railway.app/IST-Sovereign.exe"
+           class="btn-download" download="IST-Sovereign.exe">
+          ⬇ Download .exe
+        </a>
+        <div style="margin-top:12px;font-size:11px;color:var(--text2)">
+          Right-click → Run as Administrator
+        </div>
+      </div>
 
-      if (!token) {
-        window.location.href = "index.html";
-      }
+      <!-- HOW TO USE -->
+      <div class="card">
+        <div style="font-size:15px;font-weight:500;margin-bottom:12px">How to use</div>
+        <ol class="steps-list" style="list-style:none;padding:0">
+          <li><span class="step-n">1</span>Download the .exe above</li>
+          <li><span class="step-n">2</span>Right-click → Run as Administrator</li>
+          <li><span class="step-n">3</span>Enter your IST-SIM key</li>
+          <li><span class="step-n">4</span>Type your target app (e.g. Revit)</li>
+          <li><span class="step-n">5</span>Press ACTIVATE and see results</li>
+        </ol>
+      </div>
 
-      // Show username
-      document.getElementById("user-name").textContent =
-        user.name || user.email || "My Account";
+      <!-- SUPPORT -->
+      <div class="card">
+        <div style="font-size:15px;font-weight:500;margin-bottom:12px">Support</div>
+        <div style="font-size:13px;color:var(--text2);line-height:2">
+          <div>📧 ist.sovereign.support@gmail.com</div>
+          <div>💬 <a href="https://wa.me/917702249018" target="_blank">WhatsApp Business</a></div>
+          <div>🌐 <a href="/" onclick="goHome()">ist-sovereign-production.up.railway.app</a></div>
+        </div>
+      </div>
 
-      function goHome() {
-        window.location.href = "index.html";
-      }
-      function doLogout() {
-        localStorage.removeItem("ist_token");
-        localStorage.removeItem("ist_user");
-        window.location.href = "index.html";
-      }
+    </div>
+  </div>
+</div>
 
-      function showAlert(msg, type = "gold") {
-        const el = document.getElementById("alert-box");
-        el.textContent = msg;
-        el.style.display = "block";
-        el.style.background = type === "green" ? "#e6f4ea" : "#fef7e0";
-        el.style.color = type === "green" ? "#137333" : "#b06000";
-        setTimeout(() => (el.style.display = "none"), 5000);
-      }
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+const RAILWAY_URL = 'https://ist-sovereign-production.up.railway.app';
+const API_BASE = window.location.hostname === 'localhost' ? '' : RAILWAY_URL;
+const _fetch = (url, opts) => fetch(API_BASE + url, opts);
 
-      function fmtDate(iso) {
-        if (!iso) return "—";
-        return new Date(iso).toLocaleDateString("en-IN", {
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-        });
-      }
+const token = localStorage.getItem('ist_token');
+const user  = JSON.parse(localStorage.getItem('ist_user') || '{}');
 
-      function statusBadge(key) {
-        const expired = new Date(key.expiresAt) < new Date();
-        if (key.status === "KILLED")
-          return '<span class="badge badge-killed">TERMINATED</span>';
-        if (expired) return '<span class="badge badge-expired">EXPIRED</span>';
-        if (key.status === "ACTIVE")
-          return '<span class="badge badge-active">ACTIVE</span>';
-        return '<span class="badge badge-pending">PENDING</span>';
-      }
+if (!token) { window.location.href = 'index.html'; }
 
-      async function loadDashboard() {
-        try {
-          const r = await _fetch("/api/user/dashboard", {
-            headers: { Authorization: "Bearer " + token },
-          });
-          if (r.status === 401) {
-            doLogout();
-            return;
-          }
-          const d = await r.json();
-          const keys = d.keys || [];
+// Show username
+document.getElementById('user-name').textContent = user.name || user.email || 'My Account';
 
-          if (keys.length === 0) {
-            document.getElementById("keys-container").innerHTML = `
+function goHome() { window.location.href = 'index.html'; }
+function doLogout() {
+  localStorage.removeItem('ist_token');
+  localStorage.removeItem('ist_user');
+  window.location.href = 'index.html';
+}
+
+function showAlert(msg, type='gold') {
+  const el = document.getElementById('alert-box');
+  el.textContent = msg;
+  el.style.display = 'block';
+  el.style.background = type==='green' ? '#e6f4ea' : '#fef7e0';
+  el.style.color = type==='green' ? '#137333' : '#b06000';
+  setTimeout(() => el.style.display='none', 5000);
+}
+
+function fmtDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('en-IN',
+    {day:'numeric',month:'short',year:'numeric'});
+}
+
+function statusBadge(key) {
+  const expired = new Date(key.expiresAt) < new Date();
+  if (key.status === 'KILLED')  return '<span class="badge badge-killed">TERMINATED</span>';
+  if (expired)                  return '<span class="badge badge-expired">EXPIRED</span>';
+  if (key.status === 'ACTIVE')  return '<span class="badge badge-active">ACTIVE</span>';
+  return '<span class="badge badge-pending">PENDING</span>';
+}
+
+async function loadDashboard() {
+  try {
+    const r = await _fetch('/api/user/dashboard', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (r.status === 401) { doLogout(); return; }
+    const d = await r.json();
+    const keys = d.keys || [];
+
+    if (keys.length === 0) {
+      document.getElementById('keys-container').innerHTML = `
         <div class="key-box">
           <div style="font-size:14px;color:var(--text2);margin-bottom:4px">No keys yet</div>
           <div style="font-size:12px;color:var(--text2)">Generate your free 7-day trial key below</div>
         </div>`;
-            document.getElementById("trial-btn").style.display = "inline-flex";
-          } else {
-            const hasTrial = keys.some((k) => k.tier === "TRIAL");
-            document.getElementById("trial-btn").style.display = hasTrial
-              ? "none"
-              : "inline-flex";
-            document.getElementById("keys-container").innerHTML = keys
-              .map(
-                (k) => `
+      document.getElementById('trial-btn').style.display = 'inline-flex';
+    } else {
+      const hasTrial = keys.some(k => k.tier === 'TRIAL');
+      document.getElementById('trial-btn').style.display = hasTrial ? 'none' : 'inline-flex';
+      document.getElementById('keys-container').innerHTML = keys.map(k => `
         <div class="key-box">
           <div class="key-tier">${k.tier} KEY</div>
           <div class="key-code">${k.keyCode}</div>
@@ -571,115 +276,74 @@
           <div class="key-expiry">Expires: ${fmtDate(k.expiresAt)}</div>
           ${k.hardwareId ? `<div style="font-size:11px;color:var(--text2);margin-top:4px">Locked to your device ✓</div>` : `<div style="font-size:11px;color:var(--gold);margin-top:4px">Not yet activated on any device</div>`}
           <button class="copy-btn" style="margin-top:8px" onclick="copyKey('${k.keyCode}')">Copy Key</button>
-        </div>`,
-              )
-              .join("");
-          }
-        } catch (e) {
-          document.getElementById("keys-container").innerHTML = `
+        </div>`).join('');
+    }
+  } catch(e) {
+    document.getElementById('keys-container').innerHTML = `
       <div style="text-align:center;padding:16px;color:#c5221f;font-size:13px">
         Cannot connect to server. Is the backend running?
       </div>`;
-        }
-      }
+  }
+}
 
-      function copyKey(code) {
-        navigator.clipboard.writeText(code);
-        showAlert("Key copied to clipboard: " + code, "green");
-      }
+function copyKey(code) {
+  navigator.clipboard.writeText(code);
+  showAlert('Key copied to clipboard: ' + code, 'green');
+}
 
-      async function generateTrial() {
-        try {
-          const r = await _fetch("/api/user/trial", {
-            method: "POST",
-            headers: { Authorization: "Bearer " + token },
-          });
-          const d = await r.json();
-          if (d.error) {
-            showAlert(d.error);
-            return;
-          }
-          showAlert("Trial key generated! Check your email.", "green");
+async function generateTrial() {
+  try {
+    const r = await _fetch('/api/user/trial', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const d = await r.json();
+    if (d.error) { showAlert(d.error); return; }
+    showAlert('Trial key generated! Check your email.', 'green');
+    loadDashboard();
+  } catch(e) { showAlert('Connection error'); }
+}
+
+async function buyPlan(tier, amount) {
+  try {
+    const r = await _fetch('/api/payment/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json',
+                 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ tier })
+    });
+    const d = await r.json();
+    if (d.error) {
+      alert('Contact us to purchase:\nWhatsApp: +91 77022 49018\nEmail: ist.sovereign.support@gmail.com');
+      return;
+    }
+    new Razorpay({
+      key: window.RAZORPAY_KEY || 'rzp_test_Se9gXNic02I9UW',
+      amount: d.amount, currency: 'INR',
+      name: 'IST-Sovereign',
+      description: tier + ' Plan',
+      order_id: d.orderId,
+      handler: async function(resp) {
+        const vr = await _fetch('/api/payment/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json',
+                     'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ ...resp, tier })
+        });
+        const vd = await vr.json();
+        if (vd.success) {
+          showAlert('Payment successful! Your ' + tier + ' key: ' + vd.key.keyCode + ' — check email', 'green');
           loadDashboard();
-        } catch (e) {
-          showAlert("Connection error");
         }
-      }
+      },
+      theme: { color: '#1a73e8' }
+    }).open();
+  } catch(e) {
+    alert('Payment unavailable. Contact ist.sovereign.support@gmail.com');
+  }
+}
 
-      async function buyPlan(tier, amount) {
-        try {
-          const r = await _fetch("/api/payment/create-order", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
-            },
-            body: JSON.stringify({ tier }),
-          });
-          const d = await r.json();
-          if (d.error) {
-            alert(
-              "Contact us to purchase:\nWhatsApp: +91 77022 49018\nEmail: ist.sovereign.support@gmail.com",
-            );
-            return;
-          }
-          new Razorpay({
-            key: window.RAZORPAY_KEY || "rzp_test_Se9gXNic02I9UW",
-            amount: d.amount,
-            currency: "INR",
-            name: "IST-Sovereign",
-            description: tier + " Plan",
-            order_id: d.orderId,
-            handler: async function (resp) {
-              const vr = await _fetch("/api/payment/verify", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: "Bearer " + token,
-                },
-                body: JSON.stringify({ ...resp, tier }),
-              });
-              const vd = await vr.json();
-              if (vd.success) {
-                showAlert(
-                  "Payment successful! Your " +
-                    tier +
-                    " key: " +
-                    vd.key.keyCode +
-                    " — check email",
-                  "green",
-                );
-                loadDashboard();
-              }
-            },
-            theme: { color: "#1a73e8" },
-          }).open();
-        } catch (e) {
-          alert("Payment unavailable. Contact ist.sovereign.support@gmail.com");
-        }
-      }
-
-      async function sendFeedback() {
-        const text = document.getElementById("feedback-text").value.trim();
-        if (!text) return showAlert("Please enter your comment", "gold");
-        try {
-          const r = await _fetch("/api/user/feedback", {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-            body: JSON.stringify({ message: text })
-          });
-          if (r.ok) {
-            showAlert("Thank you! Your feedback has been sent.", "green");
-            document.getElementById("feedback-text").value = "";
-          } else {
-            showAlert("Failed to send feedback.");
-          }
-        } catch (e) {
-          showAlert("Connection error");
-        }
-      }
-
-      loadDashboard();
-    </script>
-  </body>
+loadDashboard();
+</script>
+</body>
 </html>
